@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLAME Protocol | Institutional Settlement Infrastructure</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+:root {
+    --navy-900: #0a1628;
+    --navy-800: #0f2140;
+    --navy-700: #162d54;
+    --navy-600: #1e3a5f;
+    --gold-500: #c9a227;
+    --gold-400: #d4af37;
+    --slate-100: #f1f5f9;
+    --slate-200: #e2e8f0;
+    --slate-300: #cbd5e1;
+    --slate-400: #94a3b8;
+    --slate-500: #64748b;
+    --slate-600: #475569;
+    --white: #ffffff;
+    --success: #10b981;
+    --danger: #ef4444;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-body: 'DM Sans', -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --section-padding: 100px;
+    --container-max: 1200px;
+}
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); font-size: 16px; line-height: 1.6; color: var(--slate-600); background: var(--white); }
+.container { max-width: var(--container-max); margin: 0 auto; padding: 0 24px; }
+h1, h2, h3, h4, h5 { font-family: var(--font-display); font-weight: 600; line-height: 1.2; color: var(--navy-900); }
+.section-label { font-family: var(--font-body); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-500); margin-bottom: 16px; }
+.section-title { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 16px; }
+.section-subtitle { font-size: 1.125rem; color: var(--slate-500); max-width: 600px; }
+.section-header { text-align: center; margin-bottom: 64px; }
+.section-header .section-subtitle { margin: 0 auto; }
+.text-muted { color: var(--slate-400); }
+.text-gold { color: var(--gold-500); }
+
+/* Navigation */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(10, 22, 40, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+.nav-container { max-width: var(--container-max); margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 72px; }
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--white); }
+.logo-mark { font-size: 1.5rem; color: var(--gold-400); }
+.logo-text { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; letter-spacing: 0.05em; }
+.logo-suffix { font-weight: 400; color: var(--slate-400); margin-left: 4px; }
+.nav-links { display: flex; align-items: center; gap: 32px; }
+.nav-links a { color: var(--slate-300); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.15s; }
+.nav-links a:hover { color: var(--white); }
+.nav-cta { background: var(--gold-500); color: var(--navy-900) !important; padding: 10px 20px; border-radius: 6px; font-weight: 600 !important; }
+.nav-cta:hover { background: var(--gold-400) !important; }
+.nav-mobile-toggle { display: none; }
+
+/* Hero */
+.hero { position: relative; min-height: 100vh; display: flex; align-items: center; padding: 120px 0 80px; overflow: hidden; }
+.hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, var(--navy-900) 0%, var(--navy-700) 100%); }
+.hero-gradient { position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 20%, rgba(201, 162, 39, 0.15) 0%, transparent 50%), radial-gradient(ellipse at 70% 80%, rgba(30, 58, 95, 0.5) 0%, transparent 50%); }
+.hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%); }
+.hero-content { position: relative; max-width: 600px; padding: 0 24px; margin-left: calc((100vw - var(--container-max)) / 2 + 24px); }
+@media (max-width: 1248px) { .hero-content { margin-left: 24px; } }
+.hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 8px 16px; border-radius: 100px; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--slate-300); margin-bottom: 32px; }
+.badge-dot { width: 8px; height: 8px; background: var(--success); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } }
+.hero-title { font-size: clamp(2.5rem, 5vw, 4rem); color: var(--white); margin-bottom: 24px; line-height: 1.1; }
+.title-accent { color: var(--gold-400); font-style: italic; }
+.hero-subtitle { font-size: 1.125rem; color: var(--slate-300); margin-bottom: 40px; line-height: 1.7; }
+.hero-actions { display: flex; gap: 16px; margin-bottom: 64px; flex-wrap: wrap; }
+
+/* Buttons */
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 28px; border-radius: 8px; font-size: 0.9375rem; font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: all 0.3s; }
+.btn-primary { background: var(--gold-500); color: var(--navy-900); }
+.btn-primary:hover { background: var(--gold-400); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201, 162, 39, 0.3); }
+.btn-secondary { background: rgba(255, 255, 255, 0.1); color: var(--white); border: 1px solid rgba(255, 255, 255, 0.2); }
+.btn-secondary:hover { background: rgba(255, 255, 255, 0.15); }
+
+/* Stats */
+.hero-stats { display: flex; align-items: center; gap: 32px; }
+.stat { text-align: left; }
+.stat-value { display: block; font-family: var(--font-display); font-size: 2rem; font-weight: 600; color: var(--white); }
+.stat-label { font-size: 0.8125rem; color: var(--slate-400); text-transform: uppercase; letter-spacing: 0.05em; }
+.stat-divider { width: 1px; height: 48px; background: rgba(255, 255, 255, 0.1); }
+
+/* Visual */
+.hero-visual { position: absolute; right: calc((100vw - var(--container-max)) / 2 + 24px); top: 50%; transform: translateY(-50%); width: 480px; }
+@media (max-width: 1024px) { .hero-visual { display: none; } }
+.visual-card { background: rgba(15, 33, 64, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; overflow: hidden; box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3); }
+.visual-header { display: flex; gap: 8px; padding: 16px 20px; background: rgba(0, 0, 0, 0.2); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+.visual-dot { width: 12px; height: 12px; border-radius: 50%; }
+.visual-dot.green { background: #10b981; }
+.visual-dot.yellow { background: #f59e0b; }
+.visual-dot.red { background: #ef4444; }
+.visual-code { padding: 24px; margin: 0; font-family: var(--font-mono); font-size: 0.875rem; line-height: 1.8; color: var(--slate-300); overflow-x: auto; }
+.code-key { color: #7dd3fc; }
+.code-value { color: #4ade80; }
+.code-string { color: #fbbf24; }
+
+/* Problem */
+.problem { padding: var(--section-padding) 0; background: var(--slate-100); }
+.problem-content { max-width: 700px; margin-bottom: 64px; }
+.problem-title { font-size: clamp(1.75rem, 3vw, 2.5rem); margin-bottom: 24px; }
+.problem-text { font-size: 1.125rem; color: var(--slate-500); }
+.problem-comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+@media (max-width: 768px) { .problem-comparison { grid-template-columns: 1fr; } }
+.comparison-card { background: var(--white); border-radius: 16px; padding: 40px; position: relative; }
+.comparison-card h4 { font-size: 1.25rem; margin-bottom: 24px; }
+.comparison-card ul { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+.comparison-card li { display: flex; align-items: flex-start; gap: 12px; font-size: 0.9375rem; color: var(--slate-600); }
+.icon-x, .icon-check { width: 20px; height: 20px; flex-shrink: 0; stroke-width: 2.5; margin-top: 2px; fill: none; stroke: currentColor; }
+.icon-x { color: var(--danger); }
+.icon-check { color: var(--success); }
+.traditional { background: var(--white); border: 1px solid var(--slate-200); }
+.flame { background: var(--navy-900); color: var(--white); }
+.flame h4 { color: var(--white); }
+.flame li { color: var(--slate-300); }
+.flame-badge { position: absolute; top: -12px; left: 32px; background: var(--gold-500); color: var(--navy-900); padding: 6px 16px; border-radius: 100px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; }
+
+/* Pillars */
+.pillars { padding: var(--section-padding) 0; background: var(--white); }
+.pillars-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; }
+@media (max-width: 900px) { .pillars-grid { grid-template-columns: 1fr; } }
+.pillar-card { background: var(--slate-100); border-radius: 16px; padding: 40px; position: relative; transition: all 0.3s; }
+.pillar-card:hover { background: var(--navy-900); transform: translateY(-4px); box-shadow: 0 24px 48px rgba(10, 22, 40, 0.15); }
+.pillar-card:hover * { color: var(--white); }
+.pillar-card:hover .pillar-description, .pillar-card:hover .pillar-details li { color: var(--slate-300); }
+.pillar-card:hover .pillar-proof { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); }
+.pillar-number { position: absolute; top: 32px; right: 32px; font-family: var(--font-display); font-size: 3rem; font-weight: 600; color: var(--slate-200); line-height: 1; transition: color 0.3s; }
+.pillar-card:hover .pillar-number { color: rgba(255, 255, 255, 0.1); }
+.pillar-icon { width: 56px; height: 56px; color: var(--gold-500); margin-bottom: 24px; }
+.pillar-icon svg { width: 100%; height: 100%; }
+.pillar-title { font-size: 1.375rem; margin-bottom: 12px; }
+.pillar-description { color: var(--slate-500); margin-bottom: 24px; line-height: 1.7; }
+.pillar-details { margin-bottom: 24px; }
+.pillar-details h5 { font-family: var(--font-body); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-500); margin-bottom: 12px; }
+.pillar-details ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.pillar-details li { font-size: 0.875rem; color: var(--slate-600); padding-left: 16px; position: relative; }
+.pillar-details li::before { content: "→"; position: absolute; left: 0; color: var(--gold-500); }
+.pillar-proof { display: inline-flex; align-items: center; gap: 8px; background: var(--white); border: 1px solid var(--slate-200); padding: 8px 16px; border-radius: 6px; transition: all 0.3s; }
+.proof-label { font-size: 0.75rem; color: var(--slate-500); }
+.pillar-proof code { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--navy-700); }
+.pillar-card:hover .pillar-proof code { color: var(--gold-400); }
+
+/* Determinism */
+.determinism { padding: var(--section-padding) 0; background: linear-gradient(180deg, var(--navy-800) 0%, var(--navy-900) 100%); }
+.determinism-content { max-width: 800px; margin: 0 auto; text-align: center; }
+.determinism-title { font-size: clamp(2rem, 4vw, 3rem); color: var(--white); margin-bottom: 24px; }
+.determinism-text { font-size: 1.125rem; color: var(--slate-300); margin-bottom: 64px; line-height: 1.8; }
+.determinism-text em { color: var(--gold-400); font-style: normal; font-weight: 600; }
+.determinism-diagram { display: flex; align-items: center; justify-content: center; gap: 24px; margin-bottom: 64px; flex-wrap: wrap; }
+.diagram-label { display: block; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--slate-400); margin-bottom: 12px; }
+.diagram-box { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 20px 32px; display: flex; flex-direction: column; gap: 8px; }
+.diagram-box code { font-family: var(--font-mono); font-size: 0.875rem; color: var(--slate-300); }
+.diagram-box.gold { border-color: var(--gold-500); background: rgba(201, 162, 39, 0.1); }
+.diagram-box.gold code { color: var(--gold-400); font-size: 1rem; }
+.diagram-arrow { display: flex; flex-direction: column; align-items: center; gap: 8px; color: var(--slate-500); }
+.diagram-arrow svg { width: 100px; }
+.diagram-arrow span { font-family: var(--font-mono); font-size: 0.75rem; color: var(--slate-400); }
+.determinism-benefits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+@media (max-width: 768px) { .determinism-benefits { grid-template-columns: 1fr; } }
+.benefit { text-align: center; }
+.benefit h5 { color: var(--gold-400); font-size: 1rem; margin-bottom: 8px; }
+.benefit p { color: var(--slate-400); font-size: 0.9375rem; }
+
+/* Footer */
+.footer { background: var(--navy-900); padding: 64px 0 32px; }
+.footer-main { display: flex; justify-content: space-between; gap: 64px; margin-bottom: 48px; flex-wrap: wrap; }
+.footer-brand { max-width: 300px; }
+.footer-brand p { color: var(--slate-400); margin-top: 16px; font-size: 0.9375rem; }
+.footer-links { display: flex; gap: 64px; flex-wrap: wrap; }
+.footer-column h5 { color: var(--white); font-size: 0.875rem; font-weight: 600; margin-bottom: 16px; }
+.footer-column a { display: block; color: var(--slate-400); text-decoration: none; font-size: 0.9375rem; margin-bottom: 12px; transition: color 0.15s; }
+.footer-column a:hover { color: var(--gold-400); }
+.footer-bottom { padding-top: 32px; border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: center; }
+.footer-bottom p { color: var(--slate-500); font-size: 0.875rem; }
+.footer-treaty { color: var(--gold-500) !important; font-style: italic; margin-top: 8px; }
+
+/* Animation */
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+.hero-badge, .hero-title, .hero-subtitle, .hero-actions, .hero-stats { animation: fadeInUp 0.8s ease-out forwards; }
+.hero-badge { animation-delay: 0.1s; }
+.hero-title { animation-delay: 0.2s; }
+.hero-subtitle { animation-delay: 0.3s; }
+.hero-actions { animation-delay: 0.4s; }
+.hero-stats { animation-delay: 0.5s; }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <span class="logo-mark">◈</span>
+                <span class="logo-text">FLAME<span class="logo-suffix">PROTOCOL</span></span>
+            </a>
+            <div class="nav-links">
+                <a href="#verification">Verification</a>
+                <a href="#chain-of-title">Chain of Title</a>
+                <a href="#determinism">Determinism</a>
+                <a href="#" class="nav-cta">Request Access</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-bg">
+            <div class="hero-gradient"></div>
+            <div class="hero-grid"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                Institutional Settlement Infrastructure
+            </div>
+            <h1 class="hero-title">
+                Verify Funds at the<br>
+                <span class="title-accent">Substrate Level</span>
+            </h1>
+            <p class="hero-subtitle">
+                FLAME Protocol provides deterministic verification of chain of title, 
+                clean funds certification, asset backing, and liquidity—all cryptographically 
+                provable and audit-ready for institutional compliance.
+            </p>
+            <div class="hero-actions">
+                <a href="#" class="btn btn-primary">
+                    <span>Download Integration Package</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                    </svg>
+                </a>
+                <a href="#verification" class="btn btn-secondary">
+                    <span>How It Works</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-value">$18.2B</span>
+                    <span class="stat-label">Asset Backing</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-value">100%</span>
+                    <span class="stat-label">Deterministic</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-value">12</span>
+                    <span class="stat-label">Settlement Rails</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="visual-card">
+                <div class="visual-header">
+                    <span class="visual-dot green"></span>
+                    <span class="visual-dot yellow"></span>
+                    <span class="visual-dot red"></span>
+                </div>
+                <pre class="visual-code"><code>{
+  <span class="code-key">"verification"</span>: {
+    <span class="code-key">"chain_of_title"</span>: <span class="code-value">"VALID"</span>,
+    <span class="code-key">"clean_funds"</span>: <span class="code-value">"CERTIFIED"</span>,
+    <span class="code-key">"asset_backing"</span>: <span class="code-value">"CONFIRMED"</span>,
+    <span class="code-key">"liquidity"</span>: <span class="code-value">"AVAILABLE"</span>,
+    <span class="code-key">"merkle_proof"</span>: <span class="code-string">"0x7a5c..."</span>
+  }
+}</code></pre>
+            </div>
+        </div>
+    </header>
+
+    <section class="problem">
+        <div class="container">
+            <div class="problem-content">
+                <h2 class="section-label">The Challenge</h2>
+                <h3 class="problem-title">
+                    Traditional fund verification relies on trust.<br>
+                    <span class="text-muted">FLAME relies on mathematics.</span>
+                </h3>
+                <p class="problem-text">
+                    Current banking infrastructure requires multiple intermediaries, 
+                    manual attestations, and probabilistic assessments to verify fund 
+                    legitimacy. This creates delays, costs, and—critically—uncertainty.
+                </p>
+            </div>
+            <div class="problem-comparison">
+                <div class="comparison-card traditional">
+                    <h4>Traditional Verification</h4>
+                    <ul>
+                        <li><svg class="icon-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>Manual document review</li>
+                        <li><svg class="icon-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>Multiple intermediary attestations</li>
+                        <li><svg class="icon-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>3-5 day settlement windows</li>
+                        <li><svg class="icon-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>Trust-based provenance</li>
+                        <li><svg class="icon-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>Audit reconstruction required</li>
+                    </ul>
+                </div>
+                <div class="comparison-card flame">
+                    <div class="flame-badge">FLAME Protocol</div>
+                    <h4>Cryptographic Verification</h4>
+                    <ul>
+                        <li><svg class="icon-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Deterministic proof generation</li>
+                        <li><svg class="icon-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Single-source Merkle verification</li>
+                        <li><svg class="icon-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Atomic settlement execution</li>
+                        <li><svg class="icon-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Mathematical provenance chain</li>
+                        <li><svg class="icon-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Immutable audit trail built-in</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="verification" class="pillars">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-label">Verification Framework</h2>
+                <h3 class="section-title">Four Pillars of Fund Integrity</h3>
+                <p class="section-subtitle">
+                    Every transaction verified through FLAME Protocol is validated across 
+                    four independent dimensions, each producing cryptographic proof.
+                </p>
+            </div>
+            
+            <div class="pillars-grid">
+                <div class="pillar-card" id="chain-of-title">
+                    <div class="pillar-number">01</div>
+                    <div class="pillar-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <path d="M24 4L4 14v20l20 10 20-10V14L24 4z" stroke="currentColor" stroke-width="2"/>
+                            <path d="M4 14l20 10 20-10M24 24v20" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="24" cy="14" r="4" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h4 class="pillar-title">Chain of Title</h4>
+                    <p class="pillar-description">
+                        Complete ownership history from origination to present, cryptographically 
+                        linked via Merkle tree. Every transfer, encumbrance, and release recorded.
+                    </p>
+                    <div class="pillar-details">
+                        <h5>What Banks Verify:</h5>
+                        <ul>
+                            <li>Unbroken ownership chain from source</li>
+                            <li>All intermediate transfers authenticated</li>
+                            <li>No competing claims or encumbrances</li>
+                            <li>Constitutional authority of originator</li>
+                        </ul>
+                    </div>
+                    <div class="pillar-proof">
+                        <span class="proof-label">Proof Type:</span>
+                        <code>MERKLE_INCLUSION_PROOF</code>
+                    </div>
+                </div>
+
+                <div class="pillar-card">
+                    <div class="pillar-number">02</div>
+                    <div class="pillar-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <rect x="6" y="12" width="36" height="24" rx="2" stroke="currentColor" stroke-width="2"/>
+                            <path d="M6 20h36" stroke="currentColor" stroke-width="2"/>
+                            <circle cx="24" cy="28" r="4" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h4 class="pillar-title">Clean Funds Certification</h4>
+                    <p class="pillar-description">
+                        Funds verified against AML/KYC requirements with cryptographic attestation. 
+                        Source of wealth documented and anchored to compliance frameworks.
+                    </p>
+                    <div class="pillar-details">
+                        <h5>What Banks Verify:</h5>
+                        <ul>
+                            <li>AML screening completed and passed</li>
+                            <li>Source of funds documented</li>
+                            <li>No sanctions list matches</li>
+                            <li>Compliance attestation signed</li>
+                        </ul>
+                    </div>
+                    <div class="pillar-proof">
+                        <span class="proof-label">Proof Type:</span>
+                        <code>COMPLIANCE_ATTESTATION</code>
+                    </div>
+                </div>
+
+                <div class="pillar-card">
+                    <div class="pillar-number">03</div>
+                    <div class="pillar-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <path d="M24 4l-4 8h8l-4-8z" fill="currentColor"/>
+                            <rect x="12" y="16" width="24" height="20" rx="2" stroke="currentColor" stroke-width="2"/>
+                            <path d="M12 24h24M20 24v12M28 24v12" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h4 class="pillar-title">Asset Backing Verification</h4>
+                    <p class="pillar-description">
+                        Physical and digital assets backing the instrument verified through 
+                        vault attestations, custody proofs, and lien magnitude calculations.
+                    </p>
+                    <div class="pillar-details">
+                        <h5>What Banks Verify:</h5>
+                        <ul>
+                            <li>Backing instrument identified</li>
+                            <li>Custody proof from authorized vault</li>
+                            <li>Lien magnitude vs. transaction value</li>
+                            <li>No prior encumbrances on collateral</li>
+                        </ul>
+                    </div>
+                    <div class="pillar-proof">
+                        <span class="proof-label">Proof Type:</span>
+                        <code>VAULT_ATTESTATION</code>
+                    </div>
+                </div>
+
+                <div class="pillar-card">
+                    <div class="pillar-number">04</div>
+                    <div class="pillar-icon">
+                        <svg viewBox="0 0 48 48" fill="none">
+                            <path d="M24 4c-8 8-16 14-16 24a16 16 0 1032 0c0-10-8-16-16-24z" stroke="currentColor" stroke-width="2"/>
+                            <path d="M24 36c-4.4 0-8-3.6-8-8 0-5 8-12 8-12s8 7 8 12c0 4.4-3.6 8-8 8z" fill="currentColor" opacity="0.3"/>
+                        </svg>
+                    </div>
+                    <h4 class="pillar-title">Liquidity Availability</h4>
+                    <p class="pillar-description">
+                        Real-time verification that funds are available for immediate settlement 
+                        across all 12 rails: ACH, SWIFT, ISO20022, ETH, USDT, USDC, BTC, and more.
+                    </p>
+                    <div class="pillar-details">
+                        <h5>What Banks Verify:</h5>
+                        <ul>
+                            <li>Funds not locked elsewhere</li>
+                            <li>Settlement rail availability confirmed</li>
+                            <li>Atomic execution guarantee</li>
+                            <li>No pending claims or holds</li>
+                        </ul>
+                    </div>
+                    <div class="pillar-proof">
+                        <span class="proof-label">Proof Type:</span>
+                        <code>LIQUIDITY_COMMITMENT</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="determinism" class="determinism">
+        <div class="container">
+            <div class="determinism-content">
+                <h2 class="section-label">Why Determinism Matters</h2>
+                <h3 class="determinism-title">
+                    Same Inputs. Same Outputs.<br>
+                    <span class="text-gold">Every Time. Forever.</span>
+                </h3>
+                <p class="determinism-text">
+                    Traditional systems produce different results based on timing, server state, 
+                    or intermediary decisions. FLAME Protocol guarantees that verification 
+                    performed today will produce <em>identical results</em> when re-verified 
+                    in 100 years—because mathematics doesn't change.
+                </p>
+                
+                <div class="determinism-diagram">
+                    <div class="diagram-input">
+                        <span class="diagram-label">Input</span>
+                        <div class="diagram-box">
+                            <code>master_root</code>
+                            <code>lineage_root</code>
+                            <code>index: 42</code>
+                        </div>
+                    </div>
+                    <div class="diagram-arrow">
+                        <svg viewBox="0 0 100 24">
+                            <path d="M0 12h90M80 4l12 8-12 8" stroke="currentColor" stroke-width="2" fill="none"/>
+                        </svg>
+                        <span>SHA3-256</span>
+                    </div>
+                    <div class="diagram-output">
+                        <span class="diagram-label">Output (Always)</span>
+                        <div class="diagram-box gold">
+                            <code>0x7a5c8b3d...</code>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="determinism-benefits">
+                    <div class="benefit">
+                        <h5>Audit Certainty</h5>
+                        <p>Recreate any verification at any time with mathematical precision.</p>
+                    </div>
+                    <div class="benefit">
+                        <h5>Regulatory Proof</h5>
+                        <p>Demonstrate compliance with cryptographic evidence, not attestations.</p>
+                    </div>
+                    <div class="benefit">
+                        <h5>Dispute Resolution</h5>
+                        <p>Resolve conflicts with provable, immutable transaction history.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-main">
+                <div class="footer-brand">
+                    <a href="#" class="nav-logo">
+                        <span class="logo-mark">◈</span>
+                        <span class="logo-text">FLAME<span class="logo-suffix">PROTOCOL</span></span>
+                    </a>
+                    <p>Deterministic settlement infrastructure for institutional finance.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h5>Protocol</h5>
+                        <a href="#">Verification</a>
+                        <a href="#">Chain of Title</a>
+                        <a href="#">Documentation</a>
+                    </div>
+                    <div class="footer-column">
+                        <h5>Integration</h5>
+                        <a href="#">API Access</a>
+                        <a href="#">Download</a>
+                        <a href="#">Support</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Autochthon Kingdom Decentralized Sovereign Trust</p>
+                <p class="footer-treaty">Successor Treaty with the Delawares 1778</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
