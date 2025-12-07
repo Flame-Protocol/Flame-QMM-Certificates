@@ -4,9 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FLAME Protocol | Institutional Settlement Infrastructure</title>
+    <meta name="description" content="Deterministic settlement verification for financial institutions. Validate chain of title, clean funds, asset backing, and liquidity through cryptographic proof.">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
     <style>
 :root {
     --navy-900: #0a1628;
@@ -15,6 +18,7 @@
     --navy-600: #1e3a5f;
     --gold-500: #c9a227;
     --gold-400: #d4af37;
+    --gold-300: #e5c158;
     --slate-100: #f1f5f9;
     --slate-200: #e2e8f0;
     --slate-300: #cbd5e1;
@@ -30,11 +34,14 @@
     --section-padding: 100px;
     --container-max: 1200px;
 }
+
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
 body { font-family: var(--font-body); font-size: 16px; line-height: 1.6; color: var(--slate-600); background: var(--white); }
 .container { max-width: var(--container-max); margin: 0 auto; padding: 0 24px; }
 h1, h2, h3, h4, h5 { font-family: var(--font-display); font-weight: 600; line-height: 1.2; color: var(--navy-900); }
+a { transition: all 0.2s ease; }
+
 .section-label { font-family: var(--font-body); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-500); margin-bottom: 16px; }
 .section-title { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 16px; }
 .section-subtitle { font-size: 1.125rem; color: var(--slate-500); max-width: 600px; }
@@ -51,11 +58,12 @@ h1, h2, h3, h4, h5 { font-family: var(--font-display); font-weight: 600; line-he
 .logo-text { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; letter-spacing: 0.05em; }
 .logo-suffix { font-weight: 400; color: var(--slate-400); margin-left: 4px; }
 .nav-links { display: flex; align-items: center; gap: 32px; }
-.nav-links a { color: var(--slate-300); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.15s; }
+.nav-links a { color: var(--slate-300); text-decoration: none; font-size: 0.875rem; font-weight: 500; }
 .nav-links a:hover { color: var(--white); }
 .nav-cta { background: var(--gold-500); color: var(--navy-900) !important; padding: 10px 20px; border-radius: 6px; font-weight: 600 !important; }
-.nav-cta:hover { background: var(--gold-400) !important; }
-.nav-mobile-toggle { display: none; }
+.nav-cta:hover { background: var(--gold-400) !important; transform: translateY(-1px); }
+.nav-mobile-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; }
+.nav-mobile-toggle span { width: 24px; height: 2px; background: var(--white); border-radius: 1px; }
 
 /* Hero */
 .hero { position: relative; min-height: 100vh; display: flex; align-items: center; padding: 120px 0 80px; overflow: hidden; }
@@ -64,23 +72,29 @@ h1, h2, h3, h4, h5 { font-family: var(--font-display); font-weight: 600; line-he
 .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%); }
 .hero-content { position: relative; max-width: 600px; padding: 0 24px; margin-left: calc((100vw - var(--container-max)) / 2 + 24px); }
 @media (max-width: 1248px) { .hero-content { margin-left: 24px; } }
+
 .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); padding: 8px 16px; border-radius: 100px; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--slate-300); margin-bottom: 32px; }
 .badge-dot { width: 8px; height: 8px; background: var(--success); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
 @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.2); } }
+
 .hero-title { font-size: clamp(2.5rem, 5vw, 4rem); color: var(--white); margin-bottom: 24px; line-height: 1.1; }
 .title-accent { color: var(--gold-400); font-style: italic; }
 .hero-subtitle { font-size: 1.125rem; color: var(--slate-300); margin-bottom: 40px; line-height: 1.7; }
 .hero-actions { display: flex; gap: 16px; margin-bottom: 64px; flex-wrap: wrap; }
 
 /* Buttons */
-.btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 28px; border-radius: 8px; font-size: 0.9375rem; font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: all 0.3s; }
+.btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 28px; border-radius: 8px; font-size: 0.9375rem; font-weight: 600; text-decoration: none; cursor: pointer; border: none; transition: all 0.3s; font-family: var(--font-body); }
 .btn-primary { background: var(--gold-500); color: var(--navy-900); }
 .btn-primary:hover { background: var(--gold-400); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201, 162, 39, 0.3); }
 .btn-secondary { background: rgba(255, 255, 255, 0.1); color: var(--white); border: 1px solid rgba(255, 255, 255, 0.2); }
-.btn-secondary:hover { background: rgba(255, 255, 255, 0.15); }
+.btn-secondary:hover { background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.3); }
+.btn-outline { background: transparent; border: 2px solid var(--gold-500); color: var(--gold-500); }
+.btn-outline:hover { background: var(--gold-500); color: var(--navy-900); }
+.btn-full { width: 100%; justify-content: center; }
+.btn-sm { padding: 10px 20px; font-size: 0.875rem; }
 
 /* Stats */
-.hero-stats { display: flex; align-items: center; gap: 32px; }
+.hero-stats { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
 .stat { text-align: left; }
 .stat-value { display: block; font-family: var(--font-display); font-size: 2rem; font-weight: 600; color: var(--white); }
 .stat-label { font-size: 0.8125rem; color: var(--slate-400); text-transform: uppercase; letter-spacing: 0.05em; }
@@ -88,6 +102,7 @@ h1, h2, h3, h4, h5 { font-family: var(--font-display); font-weight: 600; line-he
 
 /* Visual */
 .hero-visual { position: absolute; right: calc((100vw - var(--container-max)) / 2 + 24px); top: 50%; transform: translateY(-50%); width: 480px; }
+@media (max-width: 1248px) { .hero-visual { right: 24px; } }
 @media (max-width: 1024px) { .hero-visual { display: none; } }
 .visual-card { background: rgba(15, 33, 64, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; overflow: hidden; box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3); }
 .visual-header { display: flex; gap: 8px; padding: 16px 20px; background: rgba(0, 0, 0, 0.2); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
@@ -99,6 +114,23 @@ h1, h2, h3, h4, h5 { font-family: var(--font-display); font-weight: 600; line-he
 .code-key { color: #7dd3fc; }
 .code-value { color: #4ade80; }
 .code-string { color: #fbbf24; }
+
+/* Contracts Section */
+.contracts { padding: var(--section-padding) 0; background: var(--navy-900); }
+.contracts .section-label, .contracts .section-title { color: var(--white); }
+.contracts-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+@media (max-width: 768px) { .contracts-grid { grid-template-columns: 1fr; } }
+.contract-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 28px; transition: all 0.3s; }
+.contract-card:hover { background: rgba(255, 255, 255, 0.06); border-color: var(--gold-500); transform: translateY(-2px); }
+.contract-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+.contract-name { color: var(--white); font-size: 1.125rem; font-weight: 600; }
+.contract-badge { background: var(--success); color: white; font-size: 0.6875rem; font-weight: 700; padding: 4px 10px; border-radius: 100px; text-transform: uppercase; letter-spacing: 0.05em; }
+.contract-address { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--gold-400); word-break: break-all; margin-bottom: 16px; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 6px; }
+.contract-description { color: var(--slate-400); font-size: 0.875rem; margin-bottom: 20px; line-height: 1.6; }
+.contract-links { display: flex; gap: 12px; flex-wrap: wrap; }
+.contract-link { display: inline-flex; align-items: center; gap: 6px; color: var(--slate-300); text-decoration: none; font-size: 0.8125rem; padding: 8px 14px; background: rgba(255,255,255,0.05); border-radius: 6px; border: 1px solid rgba(255,255,255,0.1); }
+.contract-link:hover { background: var(--gold-500); color: var(--navy-900); border-color: var(--gold-500); }
+.contract-link svg { width: 14px; height: 14px; }
 
 /* Problem */
 .problem { padding: var(--section-padding) 0; background: var(--slate-100); }
@@ -166,6 +198,39 @@ h1, h2, h3, h4, h5 { font-family: var(--font-display); font-weight: 600; line-he
 .benefit h5 { color: var(--gold-400); font-size: 1rem; margin-bottom: 8px; }
 .benefit p { color: var(--slate-400); font-size: 0.9375rem; }
 
+/* Download Section */
+.download { padding: var(--section-padding) 0; background: var(--white); }
+.download-card { display: grid; grid-template-columns: 1fr 420px; gap: 64px; background: var(--navy-900); border-radius: 24px; padding: 64px; }
+@media (max-width: 1024px) { .download-card { grid-template-columns: 1fr; padding: 40px; } }
+.download-content .section-label { color: var(--gold-400); }
+.download-title { font-size: clamp(1.75rem, 3vw, 2.5rem); color: var(--white); margin-bottom: 16px; }
+.download-text { color: var(--slate-300); margin-bottom: 32px; font-size: 1.0625rem; line-height: 1.7; }
+.package-contents h4 { color: var(--white); font-size: 1rem; margin-bottom: 20px; }
+.contents-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+@media (max-width: 600px) { .contents-grid { grid-template-columns: 1fr; } }
+.content-item { display: flex; align-items: center; gap: 12px; color: var(--slate-300); font-size: 0.875rem; }
+.content-item svg { width: 20px; height: 20px; color: var(--gold-500); flex-shrink: 0; }
+
+/* Form */
+.download-form { background: var(--white); border-radius: 16px; padding: 40px; }
+.form-group { margin-bottom: 20px; }
+.form-group label { display: block; font-size: 0.875rem; font-weight: 500; color: var(--navy-900); margin-bottom: 8px; }
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 14px 16px; border: 1px solid var(--slate-200); border-radius: 8px; font-size: 1rem; font-family: var(--font-body); color: var(--navy-900); background: var(--white); transition: border-color 0.2s; }
+.form-group input::placeholder, .form-group textarea::placeholder { color: var(--slate-400); }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--gold-500); box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.1); }
+.form-group textarea { min-height: 100px; resize: vertical; }
+.form-note { text-align: center; font-size: 0.8125rem; color: var(--slate-500); margin-top: 16px; }
+.form-note a { color: var(--gold-500); }
+
+/* Trust */
+.trust { padding: 48px 0; background: var(--slate-100); border-top: 1px solid var(--slate-200); }
+.trust-content { text-align: center; }
+.trust-content h4 { font-size: 0.875rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--slate-500); margin-bottom: 24px; }
+.trust-items { display: flex; flex-wrap: wrap; justify-content: center; gap: 48px; }
+.trust-item { display: flex; flex-direction: column; gap: 4px; }
+.trust-label { font-size: 0.75rem; color: var(--slate-400); text-transform: uppercase; letter-spacing: 0.05em; }
+.trust-value { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--navy-700); }
+
 /* Footer */
 .footer { background: var(--navy-900); padding: 64px 0 32px; }
 .footer-main { display: flex; justify-content: space-between; gap: 64px; margin-bottom: 48px; flex-wrap: wrap; }
@@ -173,13 +238,20 @@ h1, h2, h3, h4, h5 { font-family: var(--font-display); font-weight: 600; line-he
 .footer-brand p { color: var(--slate-400); margin-top: 16px; font-size: 0.9375rem; }
 .footer-links { display: flex; gap: 64px; flex-wrap: wrap; }
 .footer-column h5 { color: var(--white); font-size: 0.875rem; font-weight: 600; margin-bottom: 16px; }
-.footer-column a { display: block; color: var(--slate-400); text-decoration: none; font-size: 0.9375rem; margin-bottom: 12px; transition: color 0.15s; }
+.footer-column a { display: block; color: var(--slate-400); text-decoration: none; font-size: 0.9375rem; margin-bottom: 12px; }
 .footer-column a:hover { color: var(--gold-400); }
 .footer-bottom { padding-top: 32px; border-top: 1px solid rgba(255, 255, 255, 0.1); text-align: center; }
 .footer-bottom p { color: var(--slate-500); font-size: 0.875rem; }
 .footer-treaty { color: var(--gold-500) !important; font-style: italic; margin-top: 8px; }
 
-/* Animation */
+/* Mobile Nav */
+@media (max-width: 900px) {
+    .nav-links { display: none; position: absolute; top: 72px; left: 0; right: 0; background: rgba(10, 22, 40, 0.98); flex-direction: column; padding: 24px; gap: 16px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .nav-links.open { display: flex; }
+    .nav-mobile-toggle { display: flex; }
+}
+
+/* Animations */
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
 .hero-badge, .hero-title, .hero-subtitle, .hero-actions, .hero-stats { animation: fadeInUp 0.8s ease-out forwards; }
 .hero-badge { animation-delay: 0.1s; }
@@ -187,24 +259,35 @@ h1, h2, h3, h4, h5 { font-family: var(--font-display); font-weight: 600; line-he
 .hero-subtitle { animation-delay: 0.3s; }
 .hero-actions { animation-delay: 0.4s; }
 .hero-stats { animation-delay: 0.5s; }
+
+/* Utility */
+.mb-4 { margin-bottom: 32px; }
+.mt-4 { margin-top: 32px; }
     </style>
 </head>
 <body>
+    <!-- Navigation -->
     <nav class="nav">
         <div class="nav-container">
             <a href="#" class="nav-logo">
                 <span class="logo-mark">◈</span>
                 <span class="logo-text">FLAME<span class="logo-suffix">PROTOCOL</span></span>
             </a>
-            <div class="nav-links">
-                <a href="#verification">Verification</a>
-                <a href="#chain-of-title">Chain of Title</a>
+            <div class="nav-links" id="nav-links">
+                <a href="#contracts">Verify on Mainnet</a>
+                <a href="#verification">Four Pillars</a>
                 <a href="#determinism">Determinism</a>
-                <a href="#" class="nav-cta">Request Access</a>
+                <a href="#download" class="nav-cta">Request Access</a>
             </div>
+            <button class="nav-mobile-toggle" id="nav-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
 
+    <!-- Hero Section -->
     <header class="hero">
         <div class="hero-bg">
             <div class="hero-gradient"></div>
@@ -213,7 +296,7 @@ h1, h2, h3, h4, h5 { font-family: var(--font-display); font-weight: 600; line-he
         <div class="hero-content">
             <div class="hero-badge">
                 <span class="badge-dot"></span>
-                Institutional Settlement Infrastructure
+                Live on Ethereum Mainnet
             </div>
             <h1 class="hero-title">
                 Verify Funds at the<br>
@@ -222,19 +305,19 @@ h1, h2, h3, h4, h5 { font-family: var(--font-display); font-weight: 600; line-he
             <p class="hero-subtitle">
                 FLAME Protocol provides deterministic verification of chain of title, 
                 clean funds certification, asset backing, and liquidity—all cryptographically 
-                provable and audit-ready for institutional compliance.
+                provable and verifiable directly on Ethereum mainnet.
             </p>
             <div class="hero-actions">
-                <a href="#" class="btn btn-primary">
-                    <span>Download Integration Package</span>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
-                    </svg>
-                </a>
-                <a href="#verification" class="btn btn-secondary">
-                    <span>How It Works</span>
+                <a href="#download" class="btn btn-primary">
+                    <span>Request API Access</span>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+                <a href="#contracts" class="btn btn-secondary">
+                    <span>Verify on Etherscan</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
                     </svg>
                 </a>
             </div>
@@ -250,8 +333,8 @@ h1, h2, h3, h4, h5 { font-family: var(--font-display); font-weight: 600; line-he
                 </div>
                 <div class="stat-divider"></div>
                 <div class="stat">
-                    <span class="stat-value">12</span>
-                    <span class="stat-label">Settlement Rails</span>
+                    <span class="stat-value">4</span>
+                    <span class="stat-label">Mainnet Contracts</span>
                 </div>
             </div>
         </div>
@@ -267,14 +350,152 @@ h1, h2, h3, h4, h5 { font-family: var(--font-display); font-weight: 600; line-he
     <span class="code-key">"chain_of_title"</span>: <span class="code-value">"VALID"</span>,
     <span class="code-key">"clean_funds"</span>: <span class="code-value">"CERTIFIED"</span>,
     <span class="code-key">"asset_backing"</span>: <span class="code-value">"CONFIRMED"</span>,
-    <span class="code-key">"liquidity"</span>: <span class="code-value">"AVAILABLE"</span>,
-    <span class="code-key">"merkle_proof"</span>: <span class="code-string">"0x7a5c..."</span>
+    <span class="code-key">"liquidity"</span>: <span class="code-value">"AVAILABLE"</span>
+  },
+  <span class="code-key">"contracts"</span>: {
+    <span class="code-key">"treasury"</span>: <span class="code-string">"0x9020...c016"</span>,
+    <span class="code-key">"verified"</span>: <span class="code-value">true</span>
   }
 }</code></pre>
             </div>
         </div>
     </header>
 
+    <!-- Mainnet Contracts Section -->
+    <section id="contracts" class="contracts">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-label">Ethereum Mainnet</h2>
+                <h3 class="section-title" style="color: var(--white);">Verify Everything On-Chain</h3>
+                <p class="section-subtitle" style="color: var(--slate-400);">
+                    All FLAME Protocol contracts are deployed to Ethereum mainnet. 
+                    Click any link to verify directly on Etherscan.
+                </p>
+            </div>
+            
+            <div class="contracts-grid">
+                <!-- Treasury Contract -->
+                <div class="contract-card">
+                    <div class="contract-header">
+                        <span class="contract-name">Treasury Vault</span>
+                        <span class="contract-badge">Verified</span>
+                    </div>
+                    <div class="contract-address">0x90206A9888E3963c22f6AD1c79245b6250CFc016</div>
+                    <p class="contract-description">
+                        Primary treasury holding sovereign-backed assets. Controls fund releases 
+                        and settlement execution across all rails.
+                    </p>
+                    <div class="contract-links">
+                        <a href="https://etherscan.io/address/0x90206A9888E3963c22f6AD1c79245b6250CFc016" target="_blank" rel="noopener" class="contract-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+                            Etherscan
+                        </a>
+                        <a href="https://etherscan.io/address/0x90206A9888E3963c22f6AD1c79245b6250CFc016#code" target="_blank" rel="noopener" class="contract-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            View Code
+                        </a>
+                        <a href="https://etherscan.io/address/0x90206A9888E3963c22f6AD1c79245b6250CFc016#internaltx" target="_blank" rel="noopener" class="contract-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                            Transactions
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Registry Contract -->
+                <div class="contract-card">
+                    <div class="contract-header">
+                        <span class="contract-name">Identity Registry</span>
+                        <span class="contract-badge">Verified</span>
+                    </div>
+                    <div class="contract-address">0x67CFB9bFC401fdf4F15F38E821df55787fDe236f</div>
+                    <p class="contract-description">
+                        Sovereign identity registry managing authorized participants, 
+                        institutional credentials, and chain-of-title records.
+                    </p>
+                    <div class="contract-links">
+                        <a href="https://etherscan.io/address/0x67CFB9bFC401fdf4F15F38E821df55787fDe236f" target="_blank" rel="noopener" class="contract-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+                            Etherscan
+                        </a>
+                        <a href="https://etherscan.io/address/0x67CFB9bFC401fdf4F15F38E821df55787fDe236f#code" target="_blank" rel="noopener" class="contract-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            View Code
+                        </a>
+                        <a href="https://etherscan.io/address/0x67CFB9bFC401fdf4F15F38E821df55787fDe236f#events" target="_blank" rel="noopener" class="contract-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            Events
+                        </a>
+                    </div>
+                </div>
+
+                <!-- P-Verifier Contract -->
+                <div class="contract-card">
+                    <div class="contract-header">
+                        <span class="contract-name">P-Verifier</span>
+                        <span class="contract-badge">Verified</span>
+                    </div>
+                    <div class="contract-address">0x6cA24fe8e6550bc2B2A6E56F78855061768Bc4c7</div>
+                    <p class="contract-description">
+                        Proof verification system validating Merkle proofs, signatures, 
+                        and deterministic UID derivations on-chain.
+                    </p>
+                    <div class="contract-links">
+                        <a href="https://etherscan.io/address/0x6cA24fe8e6550bc2B2A6E56F78855061768Bc4c7" target="_blank" rel="noopener" class="contract-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+                            Etherscan
+                        </a>
+                        <a href="https://etherscan.io/address/0x6cA24fe8e6550bc2B2A6E56F78855061768Bc4c7#code" target="_blank" rel="noopener" class="contract-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            View Code
+                        </a>
+                        <a href="https://etherscan.io/address/0x6cA24fe8e6550bc2B2A6E56F78855061768Bc4c7#readContract" target="_blank" rel="noopener" class="contract-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></svg>
+                            Read Contract
+                        </a>
+                    </div>
+                </div>
+
+                <!-- AEON Core Contract -->
+                <div class="contract-card">
+                    <div class="contract-header">
+                        <span class="contract-name">AEON Core Token</span>
+                        <span class="contract-badge">Verified</span>
+                    </div>
+                    <div class="contract-address">0x600D6c7BFD61a245F33B9AEbc634A876E1caFDC0</div>
+                    <p class="contract-description">
+                        Core settlement token representing verified sovereign claims. 
+                        Immutable backing with constitutional enforcement.
+                    </p>
+                    <div class="contract-links">
+                        <a href="https://etherscan.io/address/0x600D6c7BFD61a245F33B9AEbc634A876E1caFDC0" target="_blank" rel="noopener" class="contract-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+                            Etherscan
+                        </a>
+                        <a href="https://etherscan.io/address/0x600D6c7BFD61a245F33B9AEbc634A876E1caFDC0#code" target="_blank" rel="noopener" class="contract-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            View Code
+                        </a>
+                        <a href="https://etherscan.io/token/0x600D6c7BFD61a245F33B9AEbc634A876E1caFDC0" target="_blank" rel="noopener" class="contract-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                            Token Info
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 48px;">
+                <p style="color: var(--slate-400); margin-bottom: 24px;">
+                    All contracts verified and open source. Independent audits available upon request.
+                </p>
+                <a href="https://etherscan.io/accounts/label/flame-protocol" target="_blank" rel="noopener" class="btn btn-outline">
+                    View All FLAME Contracts on Etherscan
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
     <section class="problem">
         <div class="container">
             <div class="problem-content">
@@ -315,19 +536,20 @@ h1, h2, h3, h4, h5 { font-family: var(--font-display); font-weight: 600; line-he
         </div>
     </section>
 
+    <!-- Verification Pillars -->
     <section id="verification" class="pillars">
         <div class="container">
             <div class="section-header">
                 <h2 class="section-label">Verification Framework</h2>
                 <h3 class="section-title">Four Pillars of Fund Integrity</h3>
                 <p class="section-subtitle">
-                    Every transaction verified through FLAME Protocol is validated across 
-                    four independent dimensions, each producing cryptographic proof.
+                    Every transaction is validated across four independent dimensions, 
+                    each producing cryptographic proof verifiable on Ethereum mainnet.
                 </p>
             </div>
             
             <div class="pillars-grid">
-                <div class="pillar-card" id="chain-of-title">
+                <div class="pillar-card">
                     <div class="pillar-number">01</div>
                     <div class="pillar-icon">
                         <svg viewBox="0 0 48 48" fill="none">
@@ -339,20 +561,20 @@ h1, h2, h3, h4, h5 { font-family: var(--font-display); font-weight: 600; line-he
                     <h4 class="pillar-title">Chain of Title</h4>
                     <p class="pillar-description">
                         Complete ownership history from origination to present, cryptographically 
-                        linked via Merkle tree. Every transfer, encumbrance, and release recorded.
+                        linked via Merkle tree. Every transfer recorded on-chain.
                     </p>
                     <div class="pillar-details">
                         <h5>What Banks Verify:</h5>
                         <ul>
                             <li>Unbroken ownership chain from source</li>
-                            <li>All intermediate transfers authenticated</li>
+                            <li>All transfers authenticated on mainnet</li>
                             <li>No competing claims or encumbrances</li>
                             <li>Constitutional authority of originator</li>
                         </ul>
                     </div>
                     <div class="pillar-proof">
-                        <span class="proof-label">Proof Type:</span>
-                        <code>MERKLE_INCLUSION_PROOF</code>
+                        <span class="proof-label">Proof:</span>
+                        <code>MERKLE_INCLUSION</code>
                     </div>
                 </div>
 
@@ -367,20 +589,20 @@ h1, h2, h3, h4, h5 { font-family: var(--font-display); font-weight: 600; line-he
                     </div>
                     <h4 class="pillar-title">Clean Funds Certification</h4>
                     <p class="pillar-description">
-                        Funds verified against AML/KYC requirements with cryptographic attestation. 
-                        Source of wealth documented and anchored to compliance frameworks.
+                        AML/KYC compliance with cryptographic attestation. Source of wealth 
+                        documented and anchored to immutable compliance records.
                     </p>
                     <div class="pillar-details">
                         <h5>What Banks Verify:</h5>
                         <ul>
                             <li>AML screening completed and passed</li>
-                            <li>Source of funds documented</li>
+                            <li>Source of funds documented on-chain</li>
                             <li>No sanctions list matches</li>
                             <li>Compliance attestation signed</li>
                         </ul>
                     </div>
                     <div class="pillar-proof">
-                        <span class="proof-label">Proof Type:</span>
+                        <span class="proof-label">Proof:</span>
                         <code>COMPLIANCE_ATTESTATION</code>
                     </div>
                 </div>
@@ -396,20 +618,20 @@ h1, h2, h3, h4, h5 { font-family: var(--font-display); font-weight: 600; line-he
                     </div>
                     <h4 class="pillar-title">Asset Backing Verification</h4>
                     <p class="pillar-description">
-                        Physical and digital assets backing the instrument verified through 
-                        vault attestations, custody proofs, and lien magnitude calculations.
+                        Physical and digital assets verified through vault attestations, 
+                        custody proofs, and lien magnitude calculations anchored to mainnet.
                     </p>
                     <div class="pillar-details">
                         <h5>What Banks Verify:</h5>
                         <ul>
-                            <li>Backing instrument identified</li>
+                            <li>Backing instrument identified on-chain</li>
                             <li>Custody proof from authorized vault</li>
                             <li>Lien magnitude vs. transaction value</li>
                             <li>No prior encumbrances on collateral</li>
                         </ul>
                     </div>
                     <div class="pillar-proof">
-                        <span class="proof-label">Proof Type:</span>
+                        <span class="proof-label">Proof:</span>
                         <code>VAULT_ATTESTATION</code>
                     </div>
                 </div>
@@ -425,19 +647,19 @@ h1, h2, h3, h4, h5 { font-family: var(--font-display); font-weight: 600; line-he
                     <h4 class="pillar-title">Liquidity Availability</h4>
                     <p class="pillar-description">
                         Real-time verification that funds are available for immediate settlement 
-                        across all 12 rails: ACH, SWIFT, ISO20022, ETH, USDT, USDC, BTC, and more.
+                        across all rails: ACH, SWIFT, ISO20022, ETH, USDT, USDC, BTC.
                     </p>
                     <div class="pillar-details">
                         <h5>What Banks Verify:</h5>
                         <ul>
-                            <li>Funds not locked elsewhere</li>
+                            <li>Funds not locked or committed elsewhere</li>
                             <li>Settlement rail availability confirmed</li>
                             <li>Atomic execution guarantee</li>
                             <li>No pending claims or holds</li>
                         </ul>
                     </div>
                     <div class="pillar-proof">
-                        <span class="proof-label">Proof Type:</span>
+                        <span class="proof-label">Proof:</span>
                         <code>LIQUIDITY_COMMITMENT</code>
                     </div>
                 </div>
@@ -445,6 +667,7 @@ h1, h2, h3, h4, h5 { font-family: var(--font-display); font-weight: 600; line-he
         </div>
     </section>
 
+    <!-- Determinism Section -->
     <section id="determinism" class="determinism">
         <div class="container">
             <div class="determinism-content">
@@ -501,6 +724,139 @@ h1, h2, h3, h4, h5 { font-family: var(--font-display); font-weight: 600; line-he
         </div>
     </section>
 
+    <!-- Request Access Section -->
+    <section id="download" class="download">
+        <div class="container">
+            <div class="download-card">
+                <div class="download-content">
+                    <h2 class="section-label">Get Started</h2>
+                    <h3 class="download-title">Request API Access</h3>
+                    <p class="download-text">
+                        Submit your request for institutional access to FLAME Protocol. 
+                        Your package will include API credentials, documentation, 
+                        code samples, and direct support.
+                    </p>
+                    
+                    <div class="package-contents">
+                        <h4>What You'll Receive:</h4>
+                        <div class="contents-grid">
+                            <div class="content-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+                                <span>API Credentials &amp; Keys</span>
+                            </div>
+                            <div class="content-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                <span>Technical Documentation</span>
+                            </div>
+                            <div class="content-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                                <span>Code Samples (Python, Node, Rust)</span>
+                            </div>
+                            <div class="content-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                <span>Security &amp; Compliance Guide</span>
+                            </div>
+                            <div class="content-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                                <span>FLAME Core Binary (Optional)</span>
+                            </div>
+                            <div class="content-item">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                                <span>Dedicated Integration Support</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="download-form">
+                    <form id="access-form" action="https://formsubmit.co/yolewis@c-yess.org" method="POST">
+                        <!-- FormSubmit Configuration -->
+                        <input type="hidden" name="_subject" value="FLAME Protocol API Access Request">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_template" value="table">
+                        <input type="hidden" name="_next" value="https://flame.protocol/thank-you">
+                        
+                        <div class="form-group">
+                            <label for="institution">Institution Name *</label>
+                            <input type="text" id="institution" name="Institution" required placeholder="First National Bank">
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Your Name *</label>
+                            <input type="text" id="name" name="Name" required placeholder="Jane Smith">
+                        </div>
+                        <div class="form-group">
+                            <label for="title">Title / Role *</label>
+                            <input type="text" id="title" name="Title" required placeholder="VP Treasury Operations">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Work Email *</label>
+                            <input type="email" id="email" name="Email" required placeholder="jane.smith@bank.example">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" name="Phone" placeholder="+1 (555) 123-4567">
+                        </div>
+                        <div class="form-group">
+                            <label for="use-case">Primary Use Case *</label>
+                            <select id="use-case" name="Use_Case" required>
+                                <option value="">Select primary use case...</option>
+                                <option value="Fund Verification">Incoming Fund Verification</option>
+                                <option value="Settlement Processing">Settlement Processing</option>
+                                <option value="Compliance Automation">Compliance Automation</option>
+                                <option value="Audit Trail">Audit Trail Generation</option>
+                                <option value="API Integration">API / Node Integration</option>
+                                <option value="Technical Evaluation">Technical Evaluation</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Additional Information</label>
+                            <textarea id="message" name="Message" placeholder="Tell us about your specific requirements, timeline, or questions..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <span>Submit Request</span>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                            </svg>
+                        </button>
+                        <p class="form-note">
+                            Requests typically processed within 24 hours.<br>
+                            Questions? Email <a href="mailto:yolewis@c-yess.org">yolewis@c-yess.org</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Section -->
+    <section class="trust">
+        <div class="container">
+            <div class="trust-content">
+                <h4>Built on Proven Standards</h4>
+                <div class="trust-items">
+                    <div class="trust-item">
+                        <span class="trust-label">Cryptography</span>
+                        <span class="trust-value">SHA3-256 / Ed25519 / SPHINCS+</span>
+                    </div>
+                    <div class="trust-item">
+                        <span class="trust-label">Banking Rails</span>
+                        <span class="trust-value">SWIFT MT103 / ISO 20022 / ACH</span>
+                    </div>
+                    <div class="trust-item">
+                        <span class="trust-label">Blockchain</span>
+                        <span class="trust-value">Ethereum Mainnet / USDT / USDC</span>
+                    </div>
+                    <div class="trust-item">
+                        <span class="trust-label">Security</span>
+                        <span class="trust-value">HSM / YubiKey / Air-Gap Ready</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <div class="footer-main">
@@ -513,16 +869,22 @@ h1, h2, h3, h4, h5 { font-family: var(--font-display); font-weight: 600; line-he
                 </div>
                 <div class="footer-links">
                     <div class="footer-column">
-                        <h5>Protocol</h5>
-                        <a href="#">Verification</a>
-                        <a href="#">Chain of Title</a>
-                        <a href="#">Documentation</a>
+                        <h5>Verify on Mainnet</h5>
+                        <a href="https://etherscan.io/address/0x90206A9888E3963c22f6AD1c79245b6250CFc016" target="_blank">Treasury Contract</a>
+                        <a href="https://etherscan.io/address/0x67CFB9bFC401fdf4F15F38E821df55787fDe236f" target="_blank">Registry Contract</a>
+                        <a href="https://etherscan.io/address/0x6cA24fe8e6550bc2B2A6E56F78855061768Bc4c7" target="_blank">P-Verifier Contract</a>
+                        <a href="https://etherscan.io/address/0x600D6c7BFD61a245F33B9AEbc634A876E1caFDC0" target="_blank">AEON Core Token</a>
                     </div>
                     <div class="footer-column">
-                        <h5>Integration</h5>
-                        <a href="#">API Access</a>
-                        <a href="#">Download</a>
-                        <a href="#">Support</a>
+                        <h5>Protocol</h5>
+                        <a href="#verification">Four Pillars</a>
+                        <a href="#determinism">Determinism</a>
+                        <a href="#download">Request Access</a>
+                    </div>
+                    <div class="footer-column">
+                        <h5>Contact</h5>
+                        <a href="mailto:yolewis@c-yess.org">yolewis@c-yess.org</a>
+                        <a href="#download">Integration Support</a>
                     </div>
                 </div>
             </div>
@@ -532,5 +894,55 @@ h1, h2, h3, h4, h5 { font-family: var(--font-display); font-weight: 600; line-he
             </div>
         </div>
     </footer>
+
+    <script>
+    // Mobile navigation toggle
+    document.getElementById('nav-toggle').addEventListener('click', function() {
+        document.getElementById('nav-links').classList.toggle('open');
+    });
+
+    // Close mobile nav on link click
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            document.getElementById('nav-links').classList.remove('open');
+        });
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href === '#') return;
+            
+            const target = document.querySelector(href);
+            if (target) {
+                e.preventDefault();
+                const navHeight = document.querySelector('.nav').offsetHeight;
+                window.scrollTo({
+                    top: target.offsetTop - navHeight - 20,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Form submission feedback
+    const form = document.getElementById('access-form');
+    form.addEventListener('submit', function(e) {
+        const btn = form.querySelector('button[type="submit"]');
+        btn.innerHTML = '<span>Sending...</span>';
+        btn.disabled = true;
+    });
+
+    // Nav background on scroll
+    window.addEventListener('scroll', () => {
+        const nav = document.querySelector('.nav');
+        if (window.scrollY > 50) {
+            nav.style.background = 'rgba(10, 22, 40, 0.98)';
+        } else {
+            nav.style.background = 'rgba(10, 22, 40, 0.95)';
+        }
+    });
+    </script>
 </body>
 </html>
